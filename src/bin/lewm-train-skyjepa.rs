@@ -244,7 +244,13 @@ fn main() -> anyhow::Result<()> {
     prepare_output_dir(&args, &output_dir)?;
     let (audit_path, _audit) = load_audit(&args, &dataset_dir)?;
 
-    let model_cfg = SkyJepaConfig::paper_derived();
+    let model_cfg = if args.stage == TrainingStage::Prober {
+        SkyJepaCheckpoint::load(args.latent_checkpoint.as_ref().unwrap_or(&output_dir))?
+            .contract
+            .model
+    } else {
+        SkyJepaConfig::paper_derived()
+    };
     let dataset_cfg = SkyJepaDatasetConfig {
         batch_size: args.batch_size,
         history_steps: model_cfg.history_steps,

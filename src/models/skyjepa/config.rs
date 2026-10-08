@@ -51,6 +51,10 @@ pub struct SkyJepaConfig {
     pub latent_dim: usize,
     pub state_encoder: TemporalConvConfig,
     pub action_encoder: TemporalConvConfig,
+    /// Experimental JEPA-Anything adaptation. None preserves the original
+    /// architecture and serialized checkpoint contract byte for byte.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub opf_factors: Option<usize>,
 }
 
 impl SkyJepaConfig {
@@ -73,6 +77,7 @@ impl SkyJepaConfig {
                 channels: vec![4, 4, 8],
                 kernel_size: 3,
             },
+            opf_factors: None,
         }
     }
 
@@ -88,6 +93,12 @@ impl SkyJepaConfig {
             "rollout_steps must be greater than zero"
         );
         ensure!(self.latent_dim > 0, "latent_dim must be greater than zero");
+        if let Some(factors) = self.opf_factors {
+            ensure!(
+                factors > 1 && self.latent_dim.is_multiple_of(factors),
+                "OPF requires at least two factors dividing latent_dim"
+            );
+        }
         self.state_encoder.validate("state_encoder")?;
         self.action_encoder.validate("action_encoder")?;
         ensure!(

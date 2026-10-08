@@ -16,6 +16,7 @@ pub struct SkyJepaModel {
     state_projection: Linear,
     action_encoder: TemporalConvEncoder,
     predictor: GRU,
+    opf: Option<(Linear, Tensor)>,
 }
 
 impl SkyJepaModel {
@@ -36,12 +37,22 @@ impl SkyJepaModel {
             GRUConfig::default(),
             vb.pp("predictor"),
         )?;
+        let opf = if cfg.opf_factors.is_some() {
+            let head = linear(cfg.latent_dim, cfg.latent_dim, vb.pp("factor_head"))?;
+            // Frozen orthonormal analysis rows: row-vector synthesis is u @ Q.
+            // The importer audits geometry and Python/Candle rollout parity.
+            let basis = vb.get((cfg.latent_dim, cfg.latent_dim), "opf_basis")?;
+            Some((head, basis))
+        } else {
+            None
+        };
         Ok(Self {
             cfg,
             state_encoder,
             state_projection,
             action_encoder,
             predictor,
+            opf,
         })
     }
 
@@ -135,6 +146,9 @@ impl SkyJepaModel {
         for step in 0..rollout_steps {
             let action = action_embeddings.i((.., step, ..))?.contiguous()?;
             state = self.predictor.step(&action, &state)?;
+            if let Some((head, basis)) = &self.opf {
+                state.h = head.forward(state.h())?.matmul(basis)?;
+            }
             predictions.push(state.h().clone());
         }
         let refs = predictions.iter().collect::<Vec<_>>();

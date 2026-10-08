@@ -46,6 +46,35 @@ fn contract() -> ModelContract {
 }
 
 #[test]
+fn opf_packages_are_separate_and_old_contracts_keep_their_serialization() -> anyhow::Result<()> {
+    let original = contract();
+    let old_json = serde_json::to_value(&original.model)?;
+    assert!(old_json.get("opf_factors").is_none());
+    let parsed: SkyJepaConfig = serde_json::from_value(old_json.clone())?;
+    assert_eq!(serde_json::to_value(parsed)?, old_json);
+    let scratch = Scratch::new();
+    let weights = scratch.0.join("weights");
+    fs::write(&weights, b"fixture")?;
+    let mut opf = original;
+    opf.model.opf_factors = Some(4);
+    let package =
+        SkyJepaCheckpoint::publish(&scratch.0, opf, &weights, None, serde_json::json!({}))?;
+    assert_eq!(package.format_version, 3);
+    assert_eq!(
+        SkyJepaCheckpoint::load(&scratch.0)?
+            .contract
+            .model
+            .opf_factors,
+        Some(4)
+    );
+    let mut mislabeled = package;
+    mislabeled.format_version = 2;
+    atomic_json(&scratch.0.join("checkpoint.json"), &mislabeled)?;
+    assert!(SkyJepaCheckpoint::load(&scratch.0).is_err());
+    Ok(())
+}
+
+#[test]
 fn package_detects_modified_weights_and_preprocessing() -> anyhow::Result<()> {
     let scratch = Scratch::new();
     let weights = scratch.0.join("input.safetensors");

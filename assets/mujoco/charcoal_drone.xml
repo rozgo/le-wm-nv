@@ -1,0 +1,540 @@
+<mujoco model="JEPA Gym / X">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep=".0025" gravity="0 0 -9.81" integrator="implicitfast"/>
+  <visual><global offwidth="1920" offheight="1080"/><quality shadowsize="4096" offsamples="4"/>
+    <headlight ambient=".22 .24 .28" diffuse=".55 .58 .65" specular=".35 .35 .35"/>
+    <map znear=".01" zfar="80" shadowclip="12"/><rgba haze=".055 .065 .08 1"/></visual>
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1=".035 .045 .065" rgb2=".10 .12 .15" width="512" height="3072"/>
+    <material name="floor" rgba=".055 .064 .075 1" specular=".3" shininess=".45" reflectance=".12"/>
+    <material name="carbon" rgba=".09 .105 .125 1" specular=".65" shininess=".65"/>
+    <material name="shell" rgba=".24 .28 .31 1" specular=".75" shininess=".7"/>
+    <material name="metal" rgba=".38 .43 .46 1" specular=".9" shininess=".85"/>
+    <material name="accent" rgba=".13 .75 .68 1" emission=".35"/>
+    <material name="prop" rgba=".10 .13 .15 1" specular=".6" shininess=".7"/>
+    <material name="glass" rgba=".02 .035 .05 1" specular="1" shininess="1"/>
+  </asset>
+  <default><geom friction=".8 .01 .001" condim="3"/></default>
+  <worldbody>
+    <light pos="-3 -4 8" dir=".3 .4 -1" diffuse=".9 .88 .82" specular=".8 .8 .8" castshadow="true"/>
+    <light pos="3 4 6" dir="-.4 -.5 -1" diffuse=".35 .5 .65" castshadow="false"/>
+    <geom name="floor" type="plane" size="20 20 .1" material="floor"/>
+    <geom type="box" pos="-12 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -12 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-11 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -11 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-10 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -10 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-9 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -9 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-8 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -8 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-7 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -7 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-6 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -6 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-5 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -5 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-4 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -4 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-3 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -3 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-2 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -2 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-1 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -1 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 0 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="1 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 1 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="2 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 2 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="3 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 3 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="4 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 4 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="5 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 5 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="6 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 6 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="7 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 7 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="8 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 8 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="9 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 9 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="10 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 10 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="11 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 11 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="12 0 .001" size=".004 12 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 12 .001" size="12 .004 .001" rgba=".115 .13 .14 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-6 0 .006" size=".018 6 .005" material="accent" contype="0" conaffinity="0"/>
+<geom type="box" pos="6 0 .006" size=".018 6 .005" material="accent" contype="0" conaffinity="0"/>
+<geom type="cylinder" pos="-3.5 -3.5 .007" size=".52 .006" rgba=".12 .15 .17 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.07 -3.5 .016 -3.0736787096092617 -3.4438737373453776 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0736787096092617 -3.4438737373453776 .016 -3.0846518946957007 -3.388707810605916 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0846518946957007 -3.388707810605916 .016 -3.1027318010201466 -3.3354461240830116 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1027318010201466 -3.3354461240830116 .016 -3.1276090763726914 -3.285 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1276090763726914 -3.285 .016 -3.158858063674769 -3.23823258552625 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.158858063674769 -3.23823258552625 .016 -3.1959440840897844 -3.195944084089785 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1959440840897844 -3.195944084089785 .016 -3.23823258552625 -3.158858063674769 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.23823258552625 -3.158858063674769 .016 -3.285 -3.1276090763726914 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.285 -3.1276090763726914 .016 -3.3354461240830116 -3.1027318010201466 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.3354461240830116 -3.1027318010201466 .016 -3.388707810605916 -3.0846518946957007 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.388707810605916 -3.0846518946957007 .016 -3.4438737373453776 -3.0736787096092617 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.4438737373453776 -3.0736787096092617 .016 -3.5 -3.07 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.5 -3.07 .016 -3.5561262626546224 -3.0736787096092617 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.556126262654622 -3.0736787096092613 .016 -3.6112921893940837 -3.0846518946957007 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.6112921893940837 -3.0846518946957007 .016 -3.6645538759169884 -3.1027318010201466 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.6645538759169884 -3.1027318010201466 .016 -3.715 -3.1276090763726914 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.715 -3.1276090763726914 .016 -3.76176741447375 -3.158858063674769 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.76176741447375 -3.158858063674769 .016 -3.804055915910215 -3.1959440840897844 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.804055915910215 -3.1959440840897844 .016 -3.841141936325231 -3.23823258552625 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.841141936325231 -3.23823258552625 .016 -3.8723909236273086 -3.2849999999999997 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.8723909236273086 -3.2849999999999997 .016 -3.8972681989798534 -3.335446124083011 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.8972681989798534 -3.3354461240830116 .016 -3.9153481053042993 -3.388707810605916 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.9153481053042993 -3.388707810605916 .016 -3.9263212903907383 -3.4438737373453776 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.9263212903907383 -3.4438737373453776 .016 -3.93 -3.4999999999999996 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.93 -3.5 .016 -3.9263212903907387 -3.556126262654622 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.9263212903907387 -3.556126262654622 .016 -3.9153481053042993 -3.6112921893940837 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.9153481053042993 -3.6112921893940837 .016 -3.8972681989798534 -3.6645538759169884 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.8972681989798534 -3.6645538759169884 .016 -3.8723909236273086 -3.715 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.8723909236273086 -3.715 .016 -3.841141936325231 -3.76176741447375 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.841141936325231 -3.76176741447375 .016 -3.8040559159102156 -3.804055915910215 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.8040559159102156 -3.804055915910215 .016 -3.76176741447375 -3.841141936325231 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.76176741447375 -3.841141936325231 .016 -3.7150000000000003 -3.8723909236273086 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.7150000000000003 -3.8723909236273086 .016 -3.664553875916989 -3.8972681989798534 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.664553875916989 -3.8972681989798534 .016 -3.611292189394084 -3.9153481053042993 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.611292189394084 -3.9153481053042993 .016 -3.5561262626546224 -3.9263212903907383 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.5561262626546224 -3.9263212903907383 .016 -3.5000000000000004 -3.93 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.5 -3.93 .016 -3.443873737345378 -3.9263212903907387 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.443873737345378 -3.9263212903907387 .016 -3.3887078106059163 -3.9153481053042993 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.3887078106059163 -3.9153481053042993 .016 -3.3354461240830116 -3.8972681989798534 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.3354461240830116 -3.8972681989798534 .016 -3.285 -3.8723909236273086 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.285 -3.8723909236273086 .016 -3.2382325855262506 -3.8411419363252315 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.2382325855262506 -3.8411419363252315 .016 -3.195944084089785 -3.8040559159102156 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.195944084089785 -3.8040559159102156 .016 -3.158858063674769 -3.76176741447375 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.158858063674769 -3.76176741447375 .016 -3.1276090763726914 -3.7150000000000003 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1276090763726914 -3.7150000000000003 .016 -3.1027318010201466 -3.664553875916989 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1027318010201466 -3.664553875916989 .016 -3.0846518946957007 -3.611292189394084 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0846518946957007 -3.611292189394084 .016 -3.0736787096092617 -3.5561262626546224 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0736787096092617 -3.5561262626546224 .016 -3.07 -3.5000000000000004 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-3.63 -3.5 .018" size=".018 .18 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-3.37 -3.5 .018" size=".018 .18 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-3.5 -3.5 .018" size=".13 .018 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="cylinder" pos="-3.5 3.5 .007" size=".52 .006" rgba=".12 .15 .17 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.07 3.5 .016 -3.0736787096092617 3.5561262626546224 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0736787096092617 3.5561262626546224 .016 -3.0846518946957007 3.611292189394084 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0846518946957007 3.611292189394084 .016 -3.1027318010201466 3.6645538759169884 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1027318010201466 3.6645538759169884 .016 -3.1276090763726914 3.715 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1276090763726914 3.715 .016 -3.158858063674769 3.76176741447375 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.158858063674769 3.76176741447375 .016 -3.1959440840897844 3.804055915910215 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1959440840897844 3.804055915910215 .016 -3.23823258552625 3.841141936325231 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.23823258552625 3.841141936325231 .016 -3.285 3.8723909236273086 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.285 3.8723909236273086 .016 -3.3354461240830116 3.8972681989798534 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.3354461240830116 3.8972681989798534 .016 -3.388707810605916 3.9153481053042993 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.388707810605916 3.9153481053042993 .016 -3.4438737373453776 3.9263212903907383 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.4438737373453776 3.9263212903907383 .016 -3.5 3.93 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.5 3.93 .016 -3.5561262626546224 3.9263212903907383 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.556126262654622 3.9263212903907387 .016 -3.6112921893940837 3.9153481053042993 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.6112921893940837 3.9153481053042993 .016 -3.6645538759169884 3.8972681989798534 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.6645538759169884 3.8972681989798534 .016 -3.715 3.8723909236273086 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.715 3.8723909236273086 .016 -3.76176741447375 3.841141936325231 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.76176741447375 3.841141936325231 .016 -3.804055915910215 3.8040559159102156 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.804055915910215 3.8040559159102156 .016 -3.841141936325231 3.76176741447375 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.841141936325231 3.76176741447375 .016 -3.8723909236273086 3.7150000000000003 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.8723909236273086 3.7150000000000003 .016 -3.8972681989798534 3.664553875916989 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.8972681989798534 3.6645538759169884 .016 -3.9153481053042993 3.611292189394084 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.9153481053042993 3.611292189394084 .016 -3.9263212903907383 3.5561262626546224 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.9263212903907383 3.5561262626546224 .016 -3.93 3.5000000000000004 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.93 3.5 .016 -3.9263212903907387 3.443873737345378 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.9263212903907387 3.443873737345378 .016 -3.9153481053042993 3.3887078106059163 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.9153481053042993 3.3887078106059163 .016 -3.8972681989798534 3.3354461240830116 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.8972681989798534 3.3354461240830116 .016 -3.8723909236273086 3.285 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.8723909236273086 3.285 .016 -3.841141936325231 3.23823258552625 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.841141936325231 3.23823258552625 .016 -3.8040559159102156 3.195944084089785 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.8040559159102156 3.195944084089785 .016 -3.76176741447375 3.158858063674769 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.76176741447375 3.158858063674769 .016 -3.7150000000000003 3.1276090763726914 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.7150000000000003 3.1276090763726914 .016 -3.664553875916989 3.1027318010201466 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.664553875916989 3.1027318010201466 .016 -3.611292189394084 3.0846518946957007 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.611292189394084 3.0846518946957007 .016 -3.5561262626546224 3.0736787096092617 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.5561262626546224 3.0736787096092617 .016 -3.5000000000000004 3.07 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.5 3.07 .016 -3.443873737345378 3.0736787096092613 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.443873737345378 3.0736787096092613 .016 -3.3887078106059163 3.0846518946957007 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.3887078106059163 3.0846518946957007 .016 -3.3354461240830116 3.1027318010201466 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.3354461240830116 3.1027318010201466 .016 -3.285 3.1276090763726914 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.285 3.1276090763726914 .016 -3.2382325855262506 3.1588580636747685 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.2382325855262506 3.1588580636747685 .016 -3.195944084089785 3.1959440840897844 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.195944084089785 3.1959440840897844 .016 -3.158858063674769 3.23823258552625 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.158858063674769 3.23823258552625 .016 -3.1276090763726914 3.2849999999999997 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1276090763726914 3.2849999999999997 .016 -3.1027318010201466 3.335446124083011 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1027318010201466 3.335446124083011 .016 -3.0846518946957007 3.388707810605916 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0846518946957007 3.388707810605916 .016 -3.0736787096092617 3.4438737373453776 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0736787096092617 3.4438737373453776 .016 -3.07 3.4999999999999996 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-3.63 3.5 .018" size=".018 .18 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-3.37 3.5 .018" size=".018 .18 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-3.5 3.5 .018" size=".13 .018 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="cylinder" pos="3.5 -3.5 .007" size=".52 .006" rgba=".12 .15 .17 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.93 -3.5 .016 3.9263212903907383 -3.4438737373453776 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.9263212903907383 -3.4438737373453776 .016 3.9153481053042993 -3.388707810605916 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.9153481053042993 -3.388707810605916 .016 3.8972681989798534 -3.3354461240830116 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.8972681989798534 -3.3354461240830116 .016 3.8723909236273086 -3.285 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.8723909236273086 -3.285 .016 3.841141936325231 -3.23823258552625 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.841141936325231 -3.23823258552625 .016 3.8040559159102156 -3.195944084089785 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.8040559159102156 -3.195944084089785 .016 3.76176741447375 -3.158858063674769 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.76176741447375 -3.158858063674769 .016 3.715 -3.1276090763726914 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.715 -3.1276090763726914 .016 3.6645538759169884 -3.1027318010201466 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6645538759169884 -3.1027318010201466 .016 3.611292189394084 -3.0846518946957007 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.611292189394084 -3.0846518946957007 .016 3.5561262626546224 -3.0736787096092617 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.5561262626546224 -3.0736787096092617 .016 3.5 -3.07 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.5 -3.07 .016 3.4438737373453776 -3.0736787096092617 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.443873737345378 -3.0736787096092613 .016 3.3887078106059163 -3.0846518946957007 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.3887078106059163 -3.0846518946957007 .016 3.3354461240830116 -3.1027318010201466 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.3354461240830116 -3.1027318010201466 .016 3.285 -3.1276090763726914 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.285 -3.1276090763726914 .016 3.23823258552625 -3.158858063674769 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.23823258552625 -3.158858063674769 .016 3.195944084089785 -3.1959440840897844 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.195944084089785 -3.1959440840897844 .016 3.158858063674769 -3.23823258552625 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.158858063674769 -3.23823258552625 .016 3.1276090763726914 -3.2849999999999997 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1276090763726914 -3.2849999999999997 .016 3.1027318010201466 -3.335446124083011 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1027318010201466 -3.3354461240830116 .016 3.0846518946957007 -3.388707810605916 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0846518946957007 -3.388707810605916 .016 3.0736787096092617 -3.4438737373453776 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0736787096092617 -3.4438737373453776 .016 3.07 -3.4999999999999996 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.07 -3.5 .016 3.0736787096092613 -3.556126262654622 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0736787096092613 -3.556126262654622 .016 3.0846518946957007 -3.6112921893940837 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0846518946957007 -3.6112921893940837 .016 3.1027318010201466 -3.6645538759169884 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1027318010201466 -3.6645538759169884 .016 3.1276090763726914 -3.715 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1276090763726914 -3.715 .016 3.158858063674769 -3.76176741447375 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.158858063674769 -3.76176741447375 .016 3.1959440840897844 -3.804055915910215 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1959440840897844 -3.804055915910215 .016 3.23823258552625 -3.841141936325231 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.23823258552625 -3.841141936325231 .016 3.2849999999999997 -3.8723909236273086 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.2849999999999997 -3.8723909236273086 .016 3.335446124083011 -3.8972681989798534 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.335446124083011 -3.8972681989798534 .016 3.388707810605916 -3.9153481053042993 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.388707810605916 -3.9153481053042993 .016 3.4438737373453776 -3.9263212903907383 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.4438737373453776 -3.9263212903907383 .016 3.4999999999999996 -3.93 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.5 -3.93 .016 3.556126262654622 -3.9263212903907387 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.556126262654622 -3.9263212903907387 .016 3.6112921893940837 -3.9153481053042993 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6112921893940837 -3.9153481053042993 .016 3.6645538759169884 -3.8972681989798534 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6645538759169884 -3.8972681989798534 .016 3.715 -3.8723909236273086 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.715 -3.8723909236273086 .016 3.7617674144737494 -3.8411419363252315 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.7617674144737494 -3.8411419363252315 .016 3.804055915910215 -3.8040559159102156 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.804055915910215 -3.8040559159102156 .016 3.841141936325231 -3.76176741447375 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.841141936325231 -3.76176741447375 .016 3.8723909236273086 -3.7150000000000003 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.8723909236273086 -3.7150000000000003 .016 3.8972681989798534 -3.664553875916989 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.8972681989798534 -3.664553875916989 .016 3.9153481053042993 -3.611292189394084 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.9153481053042993 -3.611292189394084 .016 3.9263212903907383 -3.5561262626546224 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.9263212903907383 -3.5561262626546224 .016 3.93 -3.5000000000000004 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="3.37 -3.5 .018" size=".018 .18 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="3.63 -3.5 .018" size=".018 .18 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="3.5 -3.5 .018" size=".13 .018 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="cylinder" pos="3.5 3.5 .007" size=".52 .006" rgba=".12 .15 .17 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.93 3.5 .016 3.9263212903907383 3.5561262626546224 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.9263212903907383 3.5561262626546224 .016 3.9153481053042993 3.611292189394084 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.9153481053042993 3.611292189394084 .016 3.8972681989798534 3.6645538759169884 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.8972681989798534 3.6645538759169884 .016 3.8723909236273086 3.715 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.8723909236273086 3.715 .016 3.841141936325231 3.76176741447375 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.841141936325231 3.76176741447375 .016 3.8040559159102156 3.804055915910215 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.8040559159102156 3.804055915910215 .016 3.76176741447375 3.841141936325231 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.76176741447375 3.841141936325231 .016 3.715 3.8723909236273086 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.715 3.8723909236273086 .016 3.6645538759169884 3.8972681989798534 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6645538759169884 3.8972681989798534 .016 3.611292189394084 3.9153481053042993 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.611292189394084 3.9153481053042993 .016 3.5561262626546224 3.9263212903907383 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.5561262626546224 3.9263212903907383 .016 3.5 3.93 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.5 3.93 .016 3.4438737373453776 3.9263212903907383 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.443873737345378 3.9263212903907387 .016 3.3887078106059163 3.9153481053042993 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.3887078106059163 3.9153481053042993 .016 3.3354461240830116 3.8972681989798534 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.3354461240830116 3.8972681989798534 .016 3.285 3.8723909236273086 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.285 3.8723909236273086 .016 3.23823258552625 3.841141936325231 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.23823258552625 3.841141936325231 .016 3.195944084089785 3.8040559159102156 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.195944084089785 3.8040559159102156 .016 3.158858063674769 3.76176741447375 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.158858063674769 3.76176741447375 .016 3.1276090763726914 3.7150000000000003 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1276090763726914 3.7150000000000003 .016 3.1027318010201466 3.664553875916989 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1027318010201466 3.6645538759169884 .016 3.0846518946957007 3.611292189394084 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0846518946957007 3.611292189394084 .016 3.0736787096092617 3.5561262626546224 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0736787096092617 3.5561262626546224 .016 3.07 3.5000000000000004 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.07 3.5 .016 3.0736787096092613 3.443873737345378 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0736787096092613 3.443873737345378 .016 3.0846518946957007 3.3887078106059163 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0846518946957007 3.3887078106059163 .016 3.1027318010201466 3.3354461240830116 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1027318010201466 3.3354461240830116 .016 3.1276090763726914 3.285 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1276090763726914 3.285 .016 3.158858063674769 3.23823258552625 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.158858063674769 3.23823258552625 .016 3.1959440840897844 3.195944084089785 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1959440840897844 3.195944084089785 .016 3.23823258552625 3.158858063674769 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.23823258552625 3.158858063674769 .016 3.2849999999999997 3.1276090763726914 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.2849999999999997 3.1276090763726914 .016 3.335446124083011 3.1027318010201466 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.335446124083011 3.1027318010201466 .016 3.388707810605916 3.0846518946957007 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.388707810605916 3.0846518946957007 .016 3.4438737373453776 3.0736787096092617 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.4438737373453776 3.0736787096092617 .016 3.4999999999999996 3.07 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.5 3.07 .016 3.556126262654622 3.0736787096092613 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.556126262654622 3.0736787096092613 .016 3.6112921893940837 3.0846518946957007 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6112921893940837 3.0846518946957007 .016 3.6645538759169884 3.1027318010201466 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6645538759169884 3.1027318010201466 .016 3.715 3.1276090763726914 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.715 3.1276090763726914 .016 3.7617674144737494 3.1588580636747685 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.7617674144737494 3.1588580636747685 .016 3.804055915910215 3.1959440840897844 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.804055915910215 3.1959440840897844 .016 3.841141936325231 3.23823258552625 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.841141936325231 3.23823258552625 .016 3.8723909236273086 3.2849999999999997 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.8723909236273086 3.2849999999999997 .016 3.8972681989798534 3.335446124083011 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.8972681989798534 3.335446124083011 .016 3.9153481053042993 3.388707810605916 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.9153481053042993 3.388707810605916 .016 3.9263212903907383 3.4438737373453776 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.9263212903907383 3.4438737373453776 .016 3.93 3.4999999999999996 .016" size=".008" rgba=".40 .48 .50 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="3.37 3.5 .018" size=".018 .18 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="3.63 3.5 .018" size=".018 .18 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="3.5 3.5 .018" size=".13 .018 .002" rgba=".56 .64 .65 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.2800000000000002 3.0 1.65 -2.2834669967960184 3.0 1.7205723410372835" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.2834669967960184 3.0 1.7205723410372835 -2.293834598109674 3.0 1.7904650318516122" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.293834598109674 3.0 1.7904650318516122 -2.3110029582728098 3.0 1.8590049676232128" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.3110029582728098 3.0 1.8590049676232128 -2.3348067365918737 3.0 1.9255320713028645" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.3348067365918737 3.0 1.9255320713028645 -2.3650166896691847 3.0 1.9894056505147182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.3650166896691847 3.0 1.9894056505147182 -2.4013418791421675 3.0 2.0500105677741134" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.4013418791421675 3.0 2.0500105677741134 -2.4434324735788295 3.0 2.1067631645978246" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.4434324735788295 3.0 2.1067631645978246 -2.490883117545686 3.0 2.159116882454314" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.490883117545686 3.0 2.159116882454314 -2.5432368354021753 3.0 2.2065675264211704" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.5432368354021753 3.0 2.2065675264211704 -2.5999894322258865 3.0 2.2486581208578325" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.5999894322258865 3.0 2.2486581208578325 -2.6605943494852817 3.0 2.2849833103308157" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.6605943494852817 3.0 2.2849833103308157 -2.7244679286971354 3.0 2.3151932634081263" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.7244679286971354 3.0 2.3151932634081263 -2.790995032376787 3.0 2.33899704172719" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.790995032376787 3.0 2.33899704172719 -2.8595349681483877 3.0 2.3561654018903258" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.8595349681483877 3.0 2.3561654018903258 -2.9294276589627164 3.0 2.3665330032039815" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.9294276589627164 3.0 2.3665330032039815 -3.0 3.0 2.37" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0 3.0 2.37 -3.0705723410372836 3.0 2.3665330032039815" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0705723410372836 3.0 2.3665330032039815 -3.1404650318516123 3.0 2.3561654018903258" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1404650318516123 3.0 2.3561654018903258 -3.209004967623213 3.0 2.3389970417271906" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.209004967623213 3.0 2.3389970417271906 -3.2755320713028646 3.0 2.3151932634081263" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.2755320713028646 3.0 2.3151932634081263 -3.3394056505147183 3.0 2.2849833103308157" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.3394056505147183 3.0 2.2849833103308157 -3.400010567774114 3.0 2.2486581208578325" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.4000105677741135 3.0 2.2486581208578325 -3.4567631645978247 3.0 2.2065675264211704" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.4567631645978247 3.0 2.2065675264211704 -3.509116882454314 3.0 2.159116882454314" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.509116882454314 3.0 2.159116882454314 -3.5565675264211705 3.0 2.1067631645978246" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.5565675264211705 3.0 2.1067631645978246 -3.5986581208578325 3.0 2.0500105677741134" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.5986581208578325 3.0 2.0500105677741134 -3.634983310330816 3.0 1.9894056505147182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.6349833103308153 3.0 1.9894056505147184 -3.6651932634081263 3.0 1.9255320713028645" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.6651932634081263 3.0 1.9255320713028645 -3.6889970417271902 3.0 1.8590049676232128" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.6889970417271902 3.0 1.8590049676232128 -3.706165401890326 3.0 1.7904650318516122" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.706165401890326 3.0 1.7904650318516124 -3.7165330032039816 3.0 1.7205723410372837" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.7165330032039816 3.0 1.7205723410372837 -3.7199999999999998 3.0 1.65" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.7199999999999998 3.0 1.65 -3.7165330032039816 3.0 1.5794276589627163" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.7165330032039816 3.0 1.5794276589627163 -3.706165401890326 3.0 1.5095349681483876" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.706165401890326 3.0 1.5095349681483876 -3.6889970417271902 3.0 1.4409950323767868" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.6889970417271902 3.0 1.4409950323767873 -3.6651932634081263 3.0 1.3744679286971353" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.6651932634081263 3.0 1.3744679286971353 -3.6349833103308153 3.0 1.3105943494852816" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.6349833103308153 3.0 1.3105943494852816 -3.5986581208578325 3.0 1.2499894322258862" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.5986581208578325 3.0 1.2499894322258864 -3.556567526421171 3.0 1.1932368354021754" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.556567526421171 3.0 1.1932368354021754 -3.509116882454314 3.0 1.1408831175456857" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.509116882454314 3.0 1.1408831175456857 -3.4567631645978247 3.0 1.0934324735788294" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.4567631645978247 3.0 1.0934324735788294 -3.400010567774114 3.0 1.0513418791421678" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.4000105677741135 3.0 1.0513418791421674 -3.3394056505147187 3.0 1.0150166896691843" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.3394056505147187 3.0 1.0150166896691843 -3.275532071302865 3.0 0.9848067365918737" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.275532071302865 3.0 0.9848067365918737 -3.2090049676232137 3.0 0.9610029582728098" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.209004967623213 3.0 0.9610029582728096 -3.1404650318516127 3.0 0.9438345981096741" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.1404650318516127 3.0 0.9438345981096741 -3.070572341037284 3.0 0.9334669967960182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0705723410372836 3.0 0.9334669967960182 -3.0 3.0 0.9299999999999999" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0 3.0 0.9299999999999999 -2.929427658962717 3.0 0.9334669967960182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.929427658962717 3.0 0.9334669967960182 -2.859534968148388 3.0 0.9438345981096739" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.8595349681483877 3.0 0.9438345981096741 -2.790995032376787 3.0 0.9610029582728095" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.790995032376787 3.0 0.9610029582728095 -2.724467928697136 3.0 0.9848067365918733" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.7244679286971354 3.0 0.9848067365918736 -2.6605943494852817 3.0 1.0150166896691843" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.6605943494852817 3.0 1.0150166896691843 -2.5999894322258865 3.0 1.0513418791421674" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.5999894322258865 3.0 1.0513418791421674 -2.5432368354021757 3.0 1.093432473578829" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.5432368354021753 3.0 1.0934324735788294 -2.490883117545686 3.0 1.1408831175456857" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.490883117545686 3.0 1.1408831175456857 -2.4434324735788295 3.0 1.1932368354021747" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.4434324735788295 3.0 1.1932368354021747 -2.401341879142168 3.0 1.2499894322258858" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.4013418791421675 3.0 1.2499894322258864 -2.3650166896691847 3.0 1.3105943494852814" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.3650166896691847 3.0 1.3105943494852814 -2.3348067365918737 3.0 1.3744679286971349" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.3348067365918737 3.0 1.3744679286971349 -2.3110029582728098 3.0 1.4409950323767864" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.3110029582728098 3.0 1.4409950323767868 -2.293834598109674 3.0 1.5095349681483872" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.293834598109674 3.0 1.5095349681483872 -2.2834669967960184 3.0 1.5794276589627156" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-2.2834669967960184 3.0 1.5794276589627163 -2.2800000000000002 3.0 1.6499999999999997" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-3.0 3.0 .02 -3.0 3.0 .91" size=".018" material="metal" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.72 3.0 1.65 0.7165330032039817 3.0 1.7205723410372835" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.7165330032039817 3.0 1.7205723410372835 0.7061654018903258 3.0 1.7904650318516122" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.7061654018903258 3.0 1.7904650318516122 0.6889970417271903 3.0 1.8590049676232128" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.6889970417271903 3.0 1.8590049676232128 0.6651932634081265 3.0 1.9255320713028645" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.6651932634081265 3.0 1.9255320713028645 0.6349833103308156 3.0 1.9894056505147182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.6349833103308156 3.0 1.9894056505147182 0.5986581208578325 3.0 2.0500105677741134" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.5986581208578325 3.0 2.0500105677741134 0.5565675264211706 3.0 2.1067631645978246" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.5565675264211706 3.0 2.1067631645978246 0.5091168824543142 3.0 2.159116882454314" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.5091168824543142 3.0 2.159116882454314 0.45676316459782473 3.0 2.2065675264211704" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.45676316459782473 3.0 2.2065675264211704 0.40001056777411365 3.0 2.2486581208578325" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.40001056777411365 3.0 2.2486581208578325 0.3394056505147184 3.0 2.2849833103308157" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.3394056505147184 3.0 2.2849833103308157 0.27553207130286467 3.0 2.3151932634081263" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.27553207130286467 3.0 2.3151932634081263 0.20900496762321288 3.0 2.33899704172719" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.20900496762321288 3.0 2.33899704172719 0.14046503185161224 3.0 2.3561654018903258" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.14046503185161238 3.0 2.3561654018903258 0.07057234103728376 3.0 2.3665330032039815" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.07057234103728376 3.0 2.3665330032039815 4.4087284769304716e-17 3.0 2.37" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="4.4087284769304716e-17 3.0 2.37 -0.07057234103728366 3.0 2.3665330032039815" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.07057234103728366 3.0 2.3665330032039815 -0.14046503185161247 3.0 2.3561654018903258" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.1404650318516123 3.0 2.3561654018903258 -0.20900496762321275 3.0 2.3389970417271906" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.20900496762321275 3.0 2.3389970417271906 -0.2755320713028646 3.0 2.3151932634081263" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.2755320713028646 3.0 2.3151932634081263 -0.3394056505147183 3.0 2.2849833103308157" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.3394056505147183 3.0 2.2849833103308157 -0.4000105677741137 3.0 2.2486581208578325" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.40001056777411337 3.0 2.2486581208578325 -0.4567631645978247 3.0 2.2065675264211704" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.4567631645978247 3.0 2.2065675264211704 -0.5091168824543142 3.0 2.159116882454314" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.5091168824543142 3.0 2.159116882454314 -0.5565675264211706 3.0 2.1067631645978246" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.5565675264211706 3.0 2.1067631645978246 -0.5986581208578327 3.0 2.0500105677741134" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.5986581208578327 3.0 2.0500105677741134 -0.6349833103308157 3.0 1.9894056505147182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.6349833103308156 3.0 1.9894056505147184 -0.6651932634081265 3.0 1.9255320713028645" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.6651932634081265 3.0 1.9255320713028645 -0.6889970417271903 3.0 1.8590049676232128" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.6889970417271903 3.0 1.8590049676232128 -0.7061654018903258 3.0 1.7904650318516122" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.7061654018903258 3.0 1.7904650318516124 -0.7165330032039817 3.0 1.7205723410372837" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.7165330032039817 3.0 1.7205723410372837 -0.72 3.0 1.65" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.72 3.0 1.65 -0.7165330032039817 3.0 1.5794276589627163" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.7165330032039817 3.0 1.5794276589627163 -0.7061654018903258 3.0 1.5095349681483876" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.7061654018903258 3.0 1.5095349681483876 -0.6889970417271903 3.0 1.4409950323767868" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.6889970417271905 3.0 1.4409950323767873 -0.6651932634081265 3.0 1.3744679286971353" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.6651932634081265 3.0 1.3744679286971353 -0.6349833103308156 3.0 1.3105943494852816" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.6349833103308156 3.0 1.3105943494852816 -0.5986581208578325 3.0 1.2499894322258862" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.5986581208578327 3.0 1.2499894322258864 -0.5565675264211707 3.0 1.1932368354021754" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.5565675264211707 3.0 1.1932368354021754 -0.5091168824543143 3.0 1.1408831175456857" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.5091168824543143 3.0 1.1408831175456857 -0.45676316459782496 3.0 1.0934324735788294" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.45676316459782496 3.0 1.0934324735788294 -0.4000105677741141 3.0 1.0513418791421678" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.40001056777411353 3.0 1.0513418791421674 -0.3394056505147185 3.0 1.0150166896691843" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.3394056505147185 3.0 1.0150166896691843 -0.27553207130286506 3.0 0.9848067365918737" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.27553207130286506 3.0 0.9848067365918737 -0.20900496762321355 3.0 0.9610029582728098" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.20900496762321294 3.0 0.9610029582728096 -0.14046503185161263 3.0 0.9438345981096741" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.14046503185161263 3.0 0.9438345981096741 -0.07057234103728416 3.0 0.9334669967960182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-0.07057234103728352 3.0 0.9334669967960182 -1.3226185430791412e-16 3.0 0.9299999999999999" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="-1.3226185430791412e-16 3.0 0.9299999999999999 0.07057234103728326 3.0 0.9334669967960182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.07057234103728326 3.0 0.9334669967960182 0.14046503185161174 3.0 0.9438345981096739" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.14046503185161238 3.0 0.9438345981096741 0.20900496762321266 3.0 0.9610029582728095" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.20900496762321266 3.0 0.9610029582728095 0.27553207130286417 3.0 0.9848067365918733" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.2755320713028648 3.0 0.9848067365918736 0.33940565051471827 3.0 1.0150166896691843" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.33940565051471827 3.0 1.0150166896691843 0.4000105677741133 3.0 1.0513418791421674" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.4000105677741133 3.0 1.0513418791421674 0.45676316459782434 3.0 1.093432473578829" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.4567631645978248 3.0 1.0934324735788294 0.5091168824543141 3.0 1.1408831175456857" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.5091168824543141 3.0 1.1408831175456857 0.5565675264211704 3.0 1.1932368354021747" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.5565675264211704 3.0 1.1932368354021747 0.5986581208578322 3.0 1.2499894322258858" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.5986581208578325 3.0 1.2499894322258864 0.6349833103308155 3.0 1.3105943494852814" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.6349833103308155 3.0 1.3105943494852814 0.6651932634081262 3.0 1.3744679286971349" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.6651932634081262 3.0 1.3744679286971349 0.6889970417271901 3.0 1.4409950323767864" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.6889970417271903 3.0 1.4409950323767868 0.7061654018903258 3.0 1.5095349681483872" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.7061654018903258 3.0 1.5095349681483872 0.7165330032039817 3.0 1.5794276589627156" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0.7165330032039817 3.0 1.5794276589627163 0.72 3.0 1.6499999999999997" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="0 3.0 .02 0 3.0 .91" size=".018" material="metal" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.7199999999999998 3.0 1.65 3.7165330032039816 3.0 1.7205723410372835" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.7165330032039816 3.0 1.7205723410372835 3.706165401890326 3.0 1.7904650318516122" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.706165401890326 3.0 1.7904650318516122 3.6889970417271902 3.0 1.8590049676232128" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6889970417271902 3.0 1.8590049676232128 3.6651932634081263 3.0 1.9255320713028645" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6651932634081263 3.0 1.9255320713028645 3.6349833103308153 3.0 1.9894056505147182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6349833103308153 3.0 1.9894056505147182 3.5986581208578325 3.0 2.0500105677741134" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.5986581208578325 3.0 2.0500105677741134 3.5565675264211705 3.0 2.1067631645978246" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.5565675264211705 3.0 2.1067631645978246 3.509116882454314 3.0 2.159116882454314" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.509116882454314 3.0 2.159116882454314 3.4567631645978247 3.0 2.2065675264211704" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.4567631645978247 3.0 2.2065675264211704 3.4000105677741135 3.0 2.2486581208578325" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.4000105677741135 3.0 2.2486581208578325 3.3394056505147183 3.0 2.2849833103308157" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.3394056505147183 3.0 2.2849833103308157 3.2755320713028646 3.0 2.3151932634081263" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.2755320713028646 3.0 2.3151932634081263 3.209004967623213 3.0 2.33899704172719" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.209004967623213 3.0 2.33899704172719 3.1404650318516123 3.0 2.3561654018903258" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1404650318516123 3.0 2.3561654018903258 3.0705723410372836 3.0 2.3665330032039815" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0705723410372836 3.0 2.3665330032039815 3.0 3.0 2.37" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0 3.0 2.37 2.9294276589627164 3.0 2.3665330032039815" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.9294276589627164 3.0 2.3665330032039815 2.8595349681483877 3.0 2.3561654018903258" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.8595349681483877 3.0 2.3561654018903258 2.790995032376787 3.0 2.3389970417271906" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.790995032376787 3.0 2.3389970417271906 2.7244679286971354 3.0 2.3151932634081263" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.7244679286971354 3.0 2.3151932634081263 2.6605943494852817 3.0 2.2849833103308157" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.6605943494852817 3.0 2.2849833103308157 2.599989432225886 3.0 2.2486581208578325" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.5999894322258865 3.0 2.2486581208578325 2.5432368354021753 3.0 2.2065675264211704" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.5432368354021753 3.0 2.2065675264211704 2.490883117545686 3.0 2.159116882454314" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.490883117545686 3.0 2.159116882454314 2.4434324735788295 3.0 2.1067631645978246" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.4434324735788295 3.0 2.1067631645978246 2.4013418791421675 3.0 2.0500105677741134" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.4013418791421675 3.0 2.0500105677741134 2.365016689669184 3.0 1.9894056505147182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.3650166896691847 3.0 1.9894056505147184 2.3348067365918737 3.0 1.9255320713028645" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.3348067365918737 3.0 1.9255320713028645 2.3110029582728098 3.0 1.8590049676232128" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.3110029582728098 3.0 1.8590049676232128 2.293834598109674 3.0 1.7904650318516122" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.293834598109674 3.0 1.7904650318516124 2.2834669967960184 3.0 1.7205723410372837" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.2834669967960184 3.0 1.7205723410372837 2.2800000000000002 3.0 1.65" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.2800000000000002 3.0 1.65 2.2834669967960184 3.0 1.5794276589627163" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.2834669967960184 3.0 1.5794276589627163 2.293834598109674 3.0 1.5095349681483876" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.293834598109674 3.0 1.5095349681483876 2.3110029582728098 3.0 1.4409950323767868" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.3110029582728098 3.0 1.4409950323767873 2.3348067365918737 3.0 1.3744679286971353" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.3348067365918737 3.0 1.3744679286971353 2.3650166896691847 3.0 1.3105943494852816" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.3650166896691847 3.0 1.3105943494852816 2.4013418791421675 3.0 1.2499894322258862" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.4013418791421675 3.0 1.2499894322258864 2.443432473578829 3.0 1.1932368354021754" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.443432473578829 3.0 1.1932368354021754 2.490883117545686 3.0 1.1408831175456857" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.490883117545686 3.0 1.1408831175456857 2.5432368354021753 3.0 1.0934324735788294" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.5432368354021753 3.0 1.0934324735788294 2.599989432225886 3.0 1.0513418791421678" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.5999894322258865 3.0 1.0513418791421674 2.6605943494852813 3.0 1.0150166896691843" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.6605943494852813 3.0 1.0150166896691843 2.724467928697135 3.0 0.9848067365918737" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.724467928697135 3.0 0.9848067365918737 2.7909950323767863 3.0 0.9610029582728098" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.790995032376787 3.0 0.9610029582728096 2.8595349681483873 3.0 0.9438345981096741" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.8595349681483873 3.0 0.9438345981096741 2.929427658962716 3.0 0.9334669967960182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="2.9294276589627164 3.0 0.9334669967960182 3.0 3.0 0.9299999999999999" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0 3.0 0.9299999999999999 3.070572341037283 3.0 0.9334669967960182" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.070572341037283 3.0 0.9334669967960182 3.140465031851612 3.0 0.9438345981096739" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.1404650318516123 3.0 0.9438345981096741 3.209004967623213 3.0 0.9610029582728095" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.209004967623213 3.0 0.9610029582728095 3.275532071302864 3.0 0.9848067365918733" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.2755320713028646 3.0 0.9848067365918736 3.3394056505147183 3.0 1.0150166896691843" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.3394056505147183 3.0 1.0150166896691843 3.4000105677741135 3.0 1.0513418791421674" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.4000105677741135 3.0 1.0513418791421674 3.4567631645978243 3.0 1.093432473578829" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.4567631645978247 3.0 1.0934324735788294 3.509116882454314 3.0 1.1408831175456857" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.509116882454314 3.0 1.1408831175456857 3.5565675264211705 3.0 1.1932368354021747" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.5565675264211705 3.0 1.1932368354021747 3.598658120857832 3.0 1.2499894322258858" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.5986581208578325 3.0 1.2499894322258864 3.6349833103308153 3.0 1.3105943494852814" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6349833103308153 3.0 1.3105943494852814 3.6651932634081263 3.0 1.3744679286971349" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6651932634081263 3.0 1.3744679286971349 3.6889970417271902 3.0 1.4409950323767864" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.6889970417271902 3.0 1.4409950323767868 3.706165401890326 3.0 1.5095349681483872" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.706165401890326 3.0 1.5095349681483872 3.7165330032039816 3.0 1.5794276589627156" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.7165330032039816 3.0 1.5794276589627163 3.7199999999999998 3.0 1.6499999999999997" size=".012" rgba=".20 .35 .37 1" contype="0" conaffinity="0"/>
+<geom type="capsule" fromto="3.0 3.0 .02 3.0 3.0 .91" size=".018" material="metal" contype="0" conaffinity="0"/>
+<geom type="box" pos="-5 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-4 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-3 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-2 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="-1 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="0 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="1 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="2 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="3 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="4 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+<geom type="box" pos="5 -4.8 .009" size=".28 .025 .006" rgba=".65 .47 .20 1" contype="0" conaffinity="0"/>
+    <camera name="overview" pos="6 -8 5.3" xyaxes=".8 .6 0 -.27 .36 .9" fovy="42"/>
+    <body name="drone" pos="0 0 1.65">
+      <freejoint/>
+      <inertial pos="0 0 0" mass="1.3" diaginertia=".021 .023 .040"/>
+      <geom type="ellipsoid" size=".14 .09 .055" material="shell"/>
+      <geom type="box" pos="-.015 0 .052" size=".072 .049 .014" material="carbon"/>
+      <geom name="nose_mark_left" type="capsule" fromto=".025 .022 .070 .063 0 .070" size=".004" material="accent" contype="0" conaffinity="0"/>
+      <geom name="nose_mark_right" type="capsule" fromto=".025 -.022 .070 .063 0 .070" size=".004" material="accent" contype="0" conaffinity="0"/>
+      <geom type="ellipsoid" pos=".105 0 -.015" size=".045 .046 .03" material="carbon"/>
+      <geom type="cylinder" pos=".141 0 -.016" size=".023 .012" quat=".7071068 0 .7071068 0" material="metal"/>
+      <geom name="camera_lens" type="cylinder" pos=".155 0 -.016" size=".019 .002" quat=".7071068 0 .7071068 0" material="glass"/>
+      <geom type="capsule" fromto="-.08 0 .04 -.11 0 .12" size=".004" material="metal"/>
+      <geom type="capsule" fromto="0 0 .02 0.1697056274847714 0.1697056274847714 .035" size=".021" material="carbon"/>
+<geom type="cylinder" pos="0.1697056274847714 0.1697056274847714 .043" size=".038 .025" material="metal"/>
+<geom type="cylinder" pos="0.1697056274847714 0.1697056274847714 .071" size=".029 .007" material="accent"/>
+<geom name="prop0" type="ellipsoid" pos="0.1697056274847714 0.1697056274847714 .082" quat="1.0 0.0 0.0 0.0" size=".118 .016 .003" material="prop" contype="0" conaffinity="0"/>
+<geom name="rotor_disc0" type="cylinder" pos="0.1697056274847714 0.1697056274847714 .082" size=".116 .001" rgba=".25 .29 .31 .13" contype="0" conaffinity="0"/>
+<geom type="sphere" pos="0.1697056274847714 0.1697056274847714 .089" size=".012" material="metal"/>
+<site name="rotor0" pos="0.1697056274847714 0.1697056274847714 .082" size=".003" rgba="0 0 0 0"/>
+<geom type="capsule" fromto="0 0 .02 -0.1697056274847714 0.1697056274847714 .035" size=".021" material="carbon"/>
+<geom type="cylinder" pos="-0.1697056274847714 0.1697056274847714 .043" size=".038 .025" material="metal"/>
+<geom type="cylinder" pos="-0.1697056274847714 0.1697056274847714 .071" size=".029 .007" material="accent"/>
+<geom name="prop1" type="ellipsoid" pos="-0.1697056274847714 0.1697056274847714 .082" quat="0.7071067811865476 0.0 0.0 0.7071067811865475" size=".118 .016 .003" material="prop" contype="0" conaffinity="0"/>
+<geom name="rotor_disc1" type="cylinder" pos="-0.1697056274847714 0.1697056274847714 .082" size=".116 .001" rgba=".25 .29 .31 .13" contype="0" conaffinity="0"/>
+<geom type="sphere" pos="-0.1697056274847714 0.1697056274847714 .089" size=".012" material="metal"/>
+<site name="rotor1" pos="-0.1697056274847714 0.1697056274847714 .082" size=".003" rgba="0 0 0 0"/>
+<geom type="capsule" fromto="0 0 .02 -0.1697056274847714 -0.1697056274847714 .035" size=".021" material="carbon"/>
+<geom type="cylinder" pos="-0.1697056274847714 -0.1697056274847714 .043" size=".038 .025" material="metal"/>
+<geom type="cylinder" pos="-0.1697056274847714 -0.1697056274847714 .071" size=".029 .007" material="accent"/>
+<geom name="prop2" type="ellipsoid" pos="-0.1697056274847714 -0.1697056274847714 .082" quat="1.0 0.0 0.0 0.0" size=".118 .016 .003" material="prop" contype="0" conaffinity="0"/>
+<geom name="rotor_disc2" type="cylinder" pos="-0.1697056274847714 -0.1697056274847714 .082" size=".116 .001" rgba=".25 .29 .31 .13" contype="0" conaffinity="0"/>
+<geom type="sphere" pos="-0.1697056274847714 -0.1697056274847714 .089" size=".012" material="metal"/>
+<site name="rotor2" pos="-0.1697056274847714 -0.1697056274847714 .082" size=".003" rgba="0 0 0 0"/>
+<geom type="capsule" fromto="0 0 .02 0.1697056274847714 -0.1697056274847714 .035" size=".021" material="carbon"/>
+<geom type="cylinder" pos="0.1697056274847714 -0.1697056274847714 .043" size=".038 .025" material="metal"/>
+<geom type="cylinder" pos="0.1697056274847714 -0.1697056274847714 .071" size=".029 .007" material="accent"/>
+<geom name="prop3" type="ellipsoid" pos="0.1697056274847714 -0.1697056274847714 .082" quat="0.7071067811865476 0.0 0.0 0.7071067811865475" size=".118 .016 .003" material="prop" contype="0" conaffinity="0"/>
+<geom name="rotor_disc3" type="cylinder" pos="0.1697056274847714 -0.1697056274847714 .082" size=".116 .001" rgba=".25 .29 .31 .13" contype="0" conaffinity="0"/>
+<geom type="sphere" pos="0.1697056274847714 -0.1697056274847714 .089" size=".012" material="metal"/>
+<site name="rotor3" pos="0.1697056274847714 -0.1697056274847714 .082" size=".003" rgba="0 0 0 0"/>
+      <geom name="skid0" type="capsule" fromto="-.14 -0.105 -.13 .14 -0.105 -.13" size=".009" material="metal"/>
+<geom type="capsule" fromto="-0.075 -0.063 -.025 -0.075 -0.105 -.13" size=".009" material="carbon"/>
+<geom type="capsule" fromto="0.075 -0.063 -.025 0.075 -0.105 -.13" size=".009" material="carbon"/>
+<geom name="skid1" type="capsule" fromto="-.14 0.105 -.13 .14 0.105 -.13" size=".009" material="metal"/>
+<geom type="capsule" fromto="-0.075 0.063 -.025 -0.075 0.105 -.13" size=".009" material="carbon"/>
+<geom type="capsule" fromto="0.075 0.063 -.025 0.075 0.105 -.13" size=".009" material="carbon"/>
+    </body>
+  </worldbody>
+  <actuator><general name="motor0" site="rotor0" gear="0 0 1 0 0 0.025" dyntype="filterexact" dynprm=".04" gainprm="1" ctrllimited="true" ctrlrange="0 12"/>
+<general name="motor1" site="rotor1" gear="0 0 1 0 0 -0.025" dyntype="filterexact" dynprm=".04" gainprm="1" ctrllimited="true" ctrlrange="0 12"/>
+<general name="motor2" site="rotor2" gear="0 0 1 0 0 0.025" dyntype="filterexact" dynprm=".04" gainprm="1" ctrllimited="true" ctrlrange="0 12"/>
+<general name="motor3" site="rotor3" gear="0 0 1 0 0 -0.025" dyntype="filterexact" dynprm=".04" gainprm="1" ctrllimited="true" ctrlrange="0 12"/></actuator>
+</mujoco>

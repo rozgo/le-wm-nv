@@ -1,0 +1,20 @@
+[
+  {
+    "heading": "sweep",
+    "trajectory": "hover",
+    "seconds": 20,
+    "position_rmse": 4.6552715751109595e-08,
+    "attitude_rmse_degrees": 0.00678007915991244,
+    "unwrapped_heading_span_degrees": 514.372802734375,
+    "contacts": 0
+  },
+  {
+    "heading": "tangent",
+    "trajectory": "figure8",
+    "seconds": 20,
+    "position_rmse": 0.05878365408146427,
+    "attitude_rmse_degrees": 3.4450975290420214,
+    "unwrapped_heading_span_degrees": 273.343505859375,
+    "contacts": 0
+  }
+]

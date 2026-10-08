@@ -19,6 +19,7 @@ use crate::data::skyjepa::{
 };
 
 pub const CHECKPOINT_VERSION: u32 = 2;
+pub const OPF_CHECKPOINT_VERSION: u32 = 3;
 static NEXT_TEMP: AtomicU64 = AtomicU64::new(0);
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -77,7 +78,12 @@ impl SkyJepaCheckpoint {
             || "SkyJEPA requires a versioned checkpoint package, not loose safetensors",
         )?;
         ensure!(
-            checkpoint.format_version == CHECKPOINT_VERSION,
+            checkpoint.format_version
+                == if checkpoint.contract.model.opf_factors.is_some() {
+                    OPF_CHECKPOINT_VERSION
+                } else {
+                    CHECKPOINT_VERSION
+                },
             "unsupported SkyJEPA checkpoint version"
         );
         checkpoint.contract.validate()?;
@@ -109,7 +115,11 @@ impl SkyJepaCheckpoint {
             "prober configuration/weights must be paired"
         );
         let checkpoint = Self {
-            format_version: CHECKPOINT_VERSION,
+            format_version: if contract.model.opf_factors.is_some() {
+                OPF_CHECKPOINT_VERSION
+            } else {
+                CHECKPOINT_VERSION
+            },
             contract_sha256: json_sha256(&contract)?,
             contract,
             latent_sha256: store_object(root, latent)?,

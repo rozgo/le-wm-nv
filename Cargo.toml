@@ -74,6 +74,10 @@ name = "lewm-train-skyjepa"
 path = "src/bin/lewm-train-skyjepa.rs"
 
 [[bin]]
+name = "lewm-import-opf"
+path = "src/bin/lewm-import-opf.rs"
+
+[[bin]]
 name = "lewm-eval-skyjepa"
 path = "src/bin/lewm-eval-skyjepa.rs"
 

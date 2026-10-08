@@ -18,6 +18,7 @@ fn tiny_config() -> SkyJepaConfig {
         history_steps: 4,
         rollout_steps: 3,
         latent_dim: 6,
+        opf_factors: None,
         state_encoder: TemporalConvConfig {
             input_dim: 6,
             channels: vec![4, 6],
@@ -215,6 +216,7 @@ fn prober_stage_freezes_latent_model_and_backpropagates_through_integration() ->
         history_steps: 3,
         rollout_steps: 2,
         latent_dim: 6,
+        opf_factors: None,
         state_encoder: TemporalConvConfig {
             input_dim: 18,
             channels: vec![5, 6],

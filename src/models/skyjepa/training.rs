@@ -82,6 +82,9 @@ pub fn skyjepa_batch_loss_with_config(
     actions: &Tensor,
     loss_cfg: SkyJepaLossConfig,
 ) -> Result<SkyJepaBatchLoss> {
+    if model.config().opf_factors.is_some() {
+        candle::bail!("OPF latent training requires the separate EMA/factor objective trainer");
+    }
     let rollout = skyjepa_latent_rollout(model, states, actions)?;
     let predicted_latents = rollout.predicted_latents;
     let target_latents = rollout.target_latents;

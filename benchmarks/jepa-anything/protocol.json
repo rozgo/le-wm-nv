@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "status": "fixed_before_training",
+  "purpose": "Compare existing SkyJEPA with a separate JEPA-Anything OPF UAV adaptation and render a synchronized comparison video, regardless of winner.",
+  "scope": "Single-training-seed engineering comparison; no claim of paper reproduction or broad superiority.",
+  "training_seed": 7,
+  "upstream_core_commit": "c6e6c88f3ef75a4ce7acd660d6fa5779d995512c",
+  "reference_artifacts": "skyjepa-remediation-v3",
+  "data": {"dataset": "data-pilot", "split_by": "domains", "training_episodes": 1600, "validation_episodes": 200, "test_episodes": 200, "normalization": "reuse original training-only statistics"},
+  "opf": {"d": 24, "K": 4, "r": 6, "backbone": "same TCN encoders and GRU widths as SkyJEPA; independent linear factor outputs with shared recurrent trunk", "target_encoder": "EMA 0.996", "orthogonality": "QR retraction after every optimizer step", "orthogonality_weight": 0.02, "factor_activity_weight": 0.10, "encoder_variance_weight": 0.02, "minimum_std": 0.1},
+  "latent": {"steps": 1000, "batch_size": 2048, "max_lr": 0.005, "min_lr": 0.0001, "warmup_steps": 200, "cosine_steps": 800, "validation_interval": 134, "validation_batches": 8},
+  "prober": {"steps": 5000, "batch_size": 2048, "max_lr": 0.005, "min_lr": 0.0001, "warmup_steps": 500, "cosine_steps": 4500, "implementation": "same native frozen-latent physics prober trainer"},
+  "control": {"models": ["skyjepa-seed-7", "jepa-anything-opf-seed-7", "nominal-physics"], "samples": 512, "horizon": 15, "planner_seed": 7, "warm_start": "fresh-prior for every comparator", "domain_seed": 9182026, "random_domains": 20, "scenarios": ["hover", "circle", "figure-eight"], "duration_seconds": 8, "trim_multiplier": 1.0, "populations": ["training-ranges", "extended-mass-and-motor-lag"]},
+  "video": {"training_seed": 7, "domain_seed": 9182027, "scenarios": ["circle", "figure-eight"], "duration_per_flight_seconds": 20, "selection": "fixed seed, never select footage by winner", "format": "1080p side-by-side replay of recorded simulated trajectories at 1x, with numerical error and aggregate results"},
+  "acceptance": {"report_all_outcomes": true, "p95_plan_ms": 10, "control_deadline_ms": 50, "tracking_rmse_m": 0.75, "maximum_error_m": 3, "ground_contact_allowed": false},
+  "limitations": ["Additional OPF parameters and EMA objective differ from SkyJEPA; this compares complete adaptations and does not isolate factorization.", "Python is used for experimental latent training/export; inference, prober training, planning and evaluation remain native Rust/CUDA.", "Historical SkyJEPA training is reused; fresh control comparisons use the same executable on the same GPU without overlapping this experiment's training."]
+}

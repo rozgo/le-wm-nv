@@ -70,6 +70,18 @@ evaluate and run the simulator. The implementation follows the
 [SkyJEPA paper](https://arxiv.org/html/2606.23444), with its paper-derived
 contracts and repo-specific design choices documented in that guide.
 
+## JEPA Gym
+
+The [MuJoCo engineering gym](docs/mujoco-engineering-gym.md) uses one charcoal
+X-frame drone to compare the local LE-WM JEPA baseline and OPF variant, with
+live telemetry and recorded-model replay. Both models share the same drone,
+data and controller. It uses Python for the experiment and preserves the native
+runtime below. The current five-seed protocol includes changing heading,
+physics and learned readouts, and 960 matched evaluation flights.
+The [completed comparison](docs/jepa-gym-results.md) includes the video and
+five-seed results. OPF slightly improved held-out action regret but increased
+tracking error in this experiment.
+
 ## Mandate
 
 Performance is the primary acceptance criterion. The repo is not a portability
