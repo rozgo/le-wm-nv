@@ -102,3 +102,9 @@ Recorded live in this session.
 | September 18 work committed | 19:31:35 | `0128aaf` |
 | Repository transferred from VertexStudio to rozgo and pushed | 19:32:03 | GitHub push time; old URLs redirect |
 | Journal built | 19:41:30 | `build/journal`, 20 media files, 9.5 MB |
+| Journal published to rozgo.github.io/le-wm-nv | 02:44:00 | gh-pages, from `a8d8823`; page and media checked live |
+| Card added to the MuJoCo Sandbox home page | 02:46:24 | rozgo/mujoco-sandbox gh-pages, from `cb0d84e` |
+| Time log closed | 19:47:22 | |
+
+Elapsed for this session at closing: **2 hours 16 minutes 23 seconds** from 17:30:59, including review of the earlier work, the transfer, the
+journal and both publishes.
