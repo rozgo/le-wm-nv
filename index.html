@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JEPA Flight Journal</title>
+  <meta name="description" content="A Rust/Candle CUDA world-model runtime, SkyJEPA drone control rebuilt from a paper, and the MuJoCo JEPA Gym, where new JEPA architectures such as JEPA-Anything are trained and flown against matched baselines.">
+  <meta name="theme-color" content="#0b0f12">
+  <link rel="stylesheet" href="journal.css?v=179e5bb85479">
+  <style>:root { color-scheme: dark; --bg: #0b0f12; --text: #e6edf0; --muted: #8fa1ab; --card: #121920; --line: #1f2a32; --link: #48dab7; --chip: #17212a; --soft: #0f2226; --bad: #f08a6c; --bad-soft: #2a1c1b; --accent: #48dab7; --accent-2: #f3bc5b; --accent-3: #7bb1f4; --on-accent: #06120f; --hero: linear-gradient(125deg, #090c0f 0%, #0d1318 42%, #102a2e 76%, #16463f 100%); --hero-text: #eef5f7; --film: #05080a; --metric: rgba(255, 255, 255, .07); --toc: rgba(11, 15, 18, .9); --tile-1: linear-gradient(135deg, #1f9c84, #135a4d); --tile-2: linear-gradient(135deg, #3f6fb0, #253f6b); --tile-3: linear-gradient(135deg, #c98a1f, #7d520f); --tile-4: linear-gradient(135deg, #5d6b78, #333d46); --tile-text: #f4fafb; }</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <a class="home-link" href="https://rozgo.github.io/mujoco-sandbox/">&larr; MuJoCo Sandbox</a>
+    <p class="eyebrow">Engineering journal · June–September 2026 · Rust/Candle CUDA · MuJoCo 3.13 · RTX 4090</p>
+    <h1>Teaching JEPA world models to fly a drone</h1>
+    <p class="lede">A world model learns how a quadrotor responds to its rotor commands, and a sampling planner uses those predictions to choose what the motors do next. The work began as a CUDA-native port of LeWM, became SkyJEPA, a drone model rebuilt from a paper that makes a hand-written controller fly more accurately, and grew into the JEPA Gym, a MuJoCo test bench where a new JEPA architecture can be trained and flown against matched baselines in one evening.</p>
+    <figure class="hero-film">
+      <video src="media/gym_film.mp4" poster="media/gym_film_poster.webp" controls muted playsinline preload="metadata"></video>
+      <figcaption>The JEPA Gym, September 18. One X-frame drone flown by two matched JEPA models, the plain baseline (left) and the OPF variant adapted from JEPA-Anything (right): first with the physics readout, then the learned readout, then turning in place, and finally the five-seed results. Real-time replay of recorded MuJoCo poses and model predictions. The test domain and training seed were fixed before evaluation, and propeller animation is decorative.</figcaption>
+    </figure>
+    <div class="metrics"><div class="metric"><div class="value">756 / 756</div><div class="label">SkyJEPA tracking runs passed across three training seeds and four test conditions, with no ground contact</div></div><div class="metric"><div class="value">26–34%</div><div class="label">lower worst-case tracking error when SkyJEPA guides the hand-written controller (mean 4.4–6.7% lower)</div></div><div class="metric"><div class="value">1,344</div><div class="label">learned-model flights across the JEPA Gym's two studies, all with zero contact steps</div></div><div class="metric"><div class="value">3.3 ms</div><div class="label">p95 prediction and scoring with the learned readout on an RTX 4090, versus about 14 ms with the physics readout</div></div><div class="metric"><div class="value">3 h 48 min</div><div class="label">from the first look at JEPA-Anything to the verified five-seed JEPA Gym study</div></div></div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Chapters">
+  <div class="wrap"><a href="#runtime">1 A world-model runtime in Rust and CUDA</a><a href="#skyjepa">2 SkyJEPA, rebuilt from a paper</a><a href="#evidence">3 Results that hold up</a><a href="#jepa-anything">4 Trying JEPA-Anything</a><a href="#gym">5 Building the JEPA Gym</a><a href="#first-study">6 The first gym study</a><a href="#five-seeds">7 Five seeds, one X-frame drone</a><a href="#learned">8 What we learned</a><a href="#next">9 Next: new JEPA architectures</a></div>
+</nav>
+
+<main class="wrap">
+  <div class="scope"><strong>Where this stands.</strong> Simulation only, in two simulators: the project's native rotor simulator for SkyJEPA and MuJoCo 3.13 for the JEPA Gym. The world models are learned; the geometric flight controller is written by hand. In every flight that controller proposes motor commands and MPPI uses the learned predictions to choose among variations of them, so the models steer the drone rather than fly it alone. The JEPA-Anything models are this project's adaptations of its OPF method, trained here, not the authors' checkpoints. Nominal-physics MPPI and the geometric controller remain the references to beat. Every number on this page comes from files in the repository.</div>
+  <section id="runtime">
+    <h2>1 · A world-model runtime in Rust and CUDA</h2>
+    <p class="when">June 2–15 · porting LeWM, then pointing it at a drone</p>
+    <div class="prose">
+      <p>The project started as a port. LeWM is a JEPA world model from the open
+        <a href="https://github.com/galilai-group/stable-worldmodel">stable-worldmodel</a> project: it encodes an
+        observation into a latent state, predicts how that state changes under candidate actions, and scores the
+        predictions against a goal. We rebuilt its runtime in Rust on Candle CUDA tensors so that decoding, encoding,
+        rollout, scoring and action selection all stay on the GPU. CEM, MPPI and iCEM planners run there too.</p>
+      <p>The port was checked against the official Python implementation on the same RTX 4090 before any speed claim.
+        Over a fixed PushT batch, the largest difference in predicted latents was 7.3 × 10⁻⁴, and the cost ranking
+        picked the same best action.</p>
+    </div>
+    <figure style="max-width: 760px"><img src="media/runtime.webp" alt="Runtime diagram: observations decoded on the GPU, a LeWM checkpoint, the Candle CUDA runtime and CUDA planners" loading="lazy">
+      <figcaption>The runtime: observations are decoded and preprocessed on the GPU, a LeWM checkpoint is loaded into
+        Candle CUDA, and the planners score candidate action batches without leaving the device.</figcaption></figure>
+    <div class="table-wrap"><table>
+      <tr><th>Stage, image PushT planning (iCEM, 1,024 samples, 5 iterations)</th><th class="num">Rust/Candle vs Python/PyTorch</th></tr>
+      <tr><td>Media decode and preprocessing (nvJPEG and CUDA kernels)</td><td class="num">3–4× faster</td></tr>
+      <tr><td>Image encoding</td><td class="num">1.37–1.51× faster</td></tr>
+      <tr><td>iCEM planning</td><td class="num">1.13× faster</td></tr>
+      <tr class="hl"><td>Selected-score evaluation</td><td class="num">1.66× faster</td></tr>
+    </table></div>
+    <div class="prose">
+      <p>From June 12 the same runtime learned a drone. A vector-observation LeWM trained on recorded racing-drone
+        flights, a Bevy simulator replayed them, and a gate-loop test asked the planner to fly the course. Fitting the
+        simulated plant to the recordings let the recorded expert actions complete all four gates, up from two.
+        Plan traces then showed where the remaining work was: the model's objective often preferred its own action
+        sequence to the expert's while the drone drifted off the recorded path. The next model would need to be built
+        for control from the start.</p>
+    </div>
+    <div class="lesson"><strong>Measure the plant apart from the planner.</strong> Replaying expert actions through
+      the simulator tests the simulator alone. Once that replay flew the full lap, any remaining failure belonged to
+      the model and the planner, and that is where the project went next.</div>
+  </section>
+
+  <section id="skyjepa">
+    <h2>2 · SkyJEPA, rebuilt from a paper</h2>
+    <p class="when">September 3 · commits from 17:16 to 22:10, from the paper to a trained controller</p>
+    <div class="prose">
+      <p>The <a href="https://arxiv.org/html/2606.23444">SkyJEPA paper</a> describes a JEPA world model for quadrotors.
+        Its authors' model, training code and data were not available, so the implementation was reconstructed from
+        the paper, keeping the paper's interfaces and sizes separate from the choices made here. It runs natively in
+        the Rust/Candle runtime with a dedicated 200 Hz rotor-physics simulator and a 20 Hz controller.</p>
+    </div>
+    <div class="spec-cards">
+      <div class="card"><h4>Learned latent dynamics</h4><ul>
+        <li>Ten past states of 18 values each (position, velocity, attitude, angular rate) pass through a causal TCN into a 24-value latent</li>
+        <li>Windows of four rotor forces pass through a second TCN</li>
+        <li>A GRU rolls the latent forward 20 steps; loss is multi-step latent error plus SIGReg</li>
+      </ul></div>
+      <div class="card"><h4>Physics-inspired prober</h4><ul>
+        <li>Trained second, on the frozen latent model</li>
+        <li>Maps each predicted latent to motion through differentiable SO(3) integration</li>
+        <li>Turns latent predictions into positions the controller can score</li>
+      </ul></div>
+      <div class="card"><h4>Control</h4><ul>
+        <li>MPPI samples 512 rotor-command sequences over 15 steps (0.75 s)</li>
+        <li>A hand-written geometric controller supplies the starting sequence</li>
+        <li>The learned predictions decide how to adjust it</li>
+      </ul></div>
+    </div>
+    <div class="prose">
+      <p>Two problems were solved the same day. The first dataset was rejected because it did not excite the rotors
+        differently enough to learn from, and was replaced by 2,000 ten-second flights across 100 randomized vehicles.
+        Sampling raw rotor forces also proved a poor way to start each plan, so a trim-aware geometric controller now
+        proposes the first sequence and MPPI improves it. That hybrid design stayed for the rest of the project.</p>
+      <p>The first trained controller passed all 63 test flights, against 62 for the geometric controller alone. Its
+        worst trajectory error was 0.41 m, against 0.89 m, at a planning p95 of 8.69 ms.</p>
+    </div>
+    <figure><img src="media/skyjepa_first.webp" alt="The native SkyJEPA simulator: a drone tracing a yellow figure-eight trail" loading="lazy">
+      <figcaption>September 3: the first trained SkyJEPA controller flying a figure eight in the native rotor simulator.
+        The yellow trail is the executed path.</figcaption></figure>
+    <div class="lesson"><strong>Let the hand-written controller stabilize; let the model improve it.</strong>
+      Keeping the drone in the air and predicting its dynamics are different jobs. Giving each its own part made the
+      learned model's contribution measurable against the same controller flying alone.</div>
+  </section>
+
+  <section id="evidence">
+    <h2>3 · Results that hold up</h2>
+    <p class="when">September 4–5 · an audit, a fixed protocol and three training seeds</p>
+    <div class="prose">
+      <p>Before claiming more, the pipeline was audited and hardened. Test vehicles now come from physical
+        configurations never seen in training. Every configuration contains both hover and moving flights. Checkpoints
+        are bound to their normalization, timestep and training history, and interrupted training resumes exactly.
+        The evaluation protocol, with three training seeds, the test populations and the controller settings, was
+        fixed before any final test ran.</p>
+      <p>Each model trained in about 34 minutes on a shared RTX 4090, from 1,600 ten-second flights. Every controller
+        then flew the same 63 hover, circle and figure-eight cases on unseen vehicles.</p>
+    </div>
+    <figure class="film"><video src="media/skyjepa_film.mp4" poster="media/skyjepa_film_poster.webp" controls muted playsinline preload="metadata"></video>
+      <figcaption>SkyJEPA seed 7 flying a randomized drone on a figure eight, 20 s at normal speed. Yellow: executed
+        path. Cyan: reference. Magenta: predicted path. Green bars: commanded rotor forces. On-screen timing includes
+        rendering; the headless benchmarks are the timing reference.</figcaption></figure>
+    <div class="result-strip">
+      <div class="tile"><div class="big">756<small>/ 756</small></div><div class="what">tracking runs passed, no ground contact</div><div class="vs">Three seeds × four conditions, including ±10% hover-calibration error and heavier, slower-motor drones</div></div>
+      <div class="tile"><div class="big">26–34<small>%</small></div><div class="what">lower worst-case tracking error than the controller alone</div><div class="vs">Mean error 4.4–6.7% lower</div></div>
+      <div class="tile"><div class="big">≈⅔</div><div class="what">less tracking error than the same planner with random weights</div><div class="vs">Training clearly teaches useful dynamics</div></div>
+      <div class="tile"><div class="big">0</div><div class="what">missed 50 ms control deadlines</div><div class="vs">741 of 756 runs also met the stricter 10 ms p95 target</div></div>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>Controller, 63 test flights</th><th class="num">Passes</th><th class="num">Mean RMSE</th><th class="num">Worst RMSE</th><th class="num">Planning p95</th></tr>
+      <tr><td>Random-weight model + MPPI</td><td class="num">51 / 63</td><td class="num">0.604 m</td><td class="num">1.864 m</td><td class="num">8.93 ms</td></tr>
+      <tr><td>Hand-written controller alone</td><td class="num">63 / 63</td><td class="num">0.215 m</td><td class="num">0.571 m</td><td class="num">0.0015 ms</td></tr>
+      <tr class="hl"><td>Trained SkyJEPA + controller, three seeds</td><td class="num">63 / 63 each</td><td class="num">0.201–0.206 m</td><td class="num">0.378–0.423 m</td><td class="num">8.82–8.94 ms</td></tr>
+      <tr><td>Nominal-physics MPPI + controller</td><td class="num">63 / 63</td><td class="num">0.161 m</td><td class="num">0.304 m</td><td class="num">3.22 ms</td></tr>
+    </table></div>
+    <div class="note-box"><strong>The reference still ahead.</strong> Nominal-physics MPPI plans with the drone's
+      equations of motion and nominal parameters. In this clean simulator it tracked best and planned fastest, which
+      makes it the target for every learned model that follows.</div>
+    <div class="prose">
+      <p>This is the work behind the short film
+        <a href="https://www.youtube.com/watch?v=300rm4mPcYg">Self-Improving Agent Trains a UAV with JEPA</a>: an agent
+        read the paper, wrote the code and trained a drone controller that flies more accurately than the hand-written
+        one.</p>
+    </div>
+  </section>
+
+  <section id="jepa-anything">
+    <h2>4 · Trying JEPA-Anything</h2>
+    <p class="when">September 18, 18:11–18:54 · a new architecture, compared in under an hour</p>
+    <div class="prose">
+      <p>On September 17 the <a href="https://github.com/Gen-Verse/JEPA-Anything">JEPA-Anything</a> paper introduced
+        Orthogonal Predictive Factorization (OPF). OPF splits the latent state into complementary groups of coordinates,
+        predicts each group, and recombines them into the next state, with the aim of longer, more stable predictions.
+        The release turned out to be larger than its GitHub page suggested: a Hugging Face repository holds 36 checkpoint
+        files. Its core library and three released locomotion models ran on our RTX 4090.</p>
+      <p>The goal was to compare it with SkyJEPA, not replace it, and to film the comparison. OPF went into SkyJEPA's
+        own structure: the same encoders, the same 24-value recurrent state and four factor groups of six coordinates
+        recombined through a learned orthonormal basis. Its latent model trained in PyTorch in 24 seconds, then a new
+        importer brought it into the Rust runtime, matching the Python rollout to within 9 × 10⁻⁸ over 20 steps. The
+        prober and all flying ran natively.</p>
+    </div>
+    <figure class="film"><video src="media/opf_film.mp4" poster="media/opf_film_poster.webp" controls muted playsinline preload="metadata"></video>
+      <figcaption>SkyJEPA (left) and the OPF adaptation (right) flying the same drone from the same recorded data with
+        the same planner. A circle and a figure eight, each 20 simulated seconds at 1× speed, then eight seconds of
+        aggregate results. The video seed was fixed before either model was evaluated.</figcaption></figure>
+    <div class="table-wrap"><table>
+      <tr><th>Model, 63 flights per condition</th><th class="num">Unseen drones, mean RMSE</th><th class="num">Heavier, slower motors</th><th class="num">Planning p95</th></tr>
+      <tr class="hl"><td>SkyJEPA</td><td class="num">0.198 m</td><td class="num">0.206 m</td><td class="num">5.5 / 5.7 ms</td></tr>
+      <tr><td>JEPA-Anything OPF adaptation</td><td class="num">0.236 m</td><td class="num">0.233 m</td><td class="num">6.3 / 6.2 ms</td></tr>
+      <tr><td>Nominal-physics MPPI</td><td class="num">0.170 m</td><td class="num">0.166 m</td><td class="num">0.7 / 0.7 ms</td></tr>
+    </table></div>
+    <div class="prose">
+      <p>All three passed 126 of 126 tracking cases with no ground contact and no missed deadlines. SkyJEPA held its
+        lead over this first OPF adaptation in both conditions. Open-loop prediction over 26,400 held-out windows tells
+        the same story, and shows what a better architecture would need to fix:</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>Prediction horizon</th><th class="num">SkyJEPA</th><th class="num">OPF adaptation</th><th class="num">Constant velocity</th></tr>
+      <tr><td>0.25 s</td><td class="num">0.031 m</td><td class="num">0.081 m</td><td class="num">0.054 m</td></tr>
+      <tr class="hl"><td>0.75 s, the planning horizon</td><td class="num">0.286 m</td><td class="num">0.414 m</td><td class="num">0.453 m</td></tr>
+      <tr><td>1.00 s</td><td class="num">0.511 m</td><td class="num">0.669 m</td><td class="num">0.767 m</td></tr>
+      <tr><td>3.00 s</td><td class="num">8.16 m</td><td class="num">8.82 m</td><td class="num">3.32 m</td></tr>
+    </table></div>
+    <figure><img src="media/opf_results.webp" alt="Results screen: SkyJEPA, OPF adaptation and nominal physics tracking errors on unseen and heavier drones" loading="lazy">
+      <figcaption>The film's results screen, drawn directly from the benchmark files.</figcaption></figure>
+    <div class="lesson"><strong>A fixed protocol turns a new paper into an evening's experiment.</strong> Because the
+      data, splits, planner budget and baselines were already fixed, trying OPF meant writing an adapter and an
+      importer, not a new evaluation. The first comparison video was finished 41 minutes after the session began.</div>
+  </section>
+
+  <section id="gym">
+    <h2>5 · Building the JEPA Gym</h2>
+    <p class="when">September 18, 19:37–21:15 · a charcoal engineering gym for robots, in MuJoCo</p>
+    <div class="prose">
+      <p>To make comparisons like this routine, the work moved to MuJoCo 3.13. The brief was a gym for robots:
+        abstract, with training aids and overlays, but good to look at. It became the JEPA Gym: a charcoal floor grid,
+        landing pads, reference hoops, lane markings and live telemetry. MuJoCo simulates rigid-body motion and ground
+        contact at 400 Hz. Each motor has first-order lag, thrust gain and reaction torque, the airframe has linear
+        drag, and control runs at 20 Hz. The training aids have no collision response.</p>
+    </div>
+    <figure><img src="media/gym_scene.webp" alt="The JEPA Gym: a charcoal drone hovering among reference hoops on a dark grid" loading="lazy">
+      <figcaption>The charcoal flight lab: the drone, reference hoops and the target path (teal). Rendered from recorded
+        MuJoCo states.</figcaption></figure>
+    <div class="prose">
+      <p>Looking at the drone shaped the gym as much as the tests did. Watching it fly showed that it never turned to
+        face its path, so heading control was added: face the direction of travel, or turn in place independently. A
+        closer look showed landing skids that did not follow the nose and rotors in a plus layout. The skids were
+        realigned, and the drone became an X frame: diagonal arms, motors 0.24 m from the centre at 45° to the body
+        axes, the nose between the front motors, and a motor mixer that matches those positions.</p>
+    </div>
+    <div class="grid2">
+      <figure><img src="media/plus_review.webp" alt="Airframe review of the first plus-frame drone from four views" loading="lazy">
+        <figcaption>Before: the first drone, a plus frame with one rotor at the nose.</figcaption></figure>
+      <figure><img src="media/x_review.webp" alt="Airframe review of the X-frame drone from four views" loading="lazy">
+        <figcaption>After: the X frame, with diagonal arms and the nose between the front motors.</figcaption></figure>
+    </div>
+    <figure class="film"><video src="media/heading_film.mp4" poster="media/heading_film_poster.webp" controls muted playsinline preload="metadata"></video>
+      <figcaption>Heading control on the X frame: facing the path on a figure eight, then turning in place, 10 s in
+        real time. This feature demonstration is flown by the geometric controller, not a learned model. On the first
+        drone, the same checks covered a 514° yaw sweep and a 20 s figure eight with 5.9 cm position RMSE, both without
+        contact.</figcaption></figure>
+    <div class="prose">
+      <p>The gym briefly supported several airframes, which made it more complex than intended. It was cut back to one
+        X-frame drone and one motor mixer. The simplified code reproduced the recorded flights exactly, with zero state
+        difference. On a Mac, an interactive viewer opens the same gym, with live telemetry and replay of recorded
+        learned-model flights.</p>
+    </div>
+    <div class="lesson"><strong>Look at the robot.</strong> The skids and the rotor layout passed every numerical
+      test; they were caught by watching the drone. Visual review sits alongside the measurements in this gym, not
+      after them.</div>
+  </section>
+
+  <section id="first-study">
+    <h2>6 · The first gym study</h2>
+    <p class="when">September 18, by 20:35 · three seeds, the first drone, a promising signal</p>
+    <div class="prose">
+      <p>The gym compares two matched models: a plain LE-WM JEPA baseline and the same architecture with OPF. Both are
+        trained on the same data, predict 0.75 s ahead, and fly through the same MPPI controller and geometric action
+        prior. Each representation is then frozen and given
+        two readouts. The <em>physics</em> readout learns corrections inside supplied equations of motion. The
+        <em>learned</em> readout predicts future states directly, without the physics integrator.</p>
+      <p>The first study, with three training seeds on the original plus-frame drone, gave OPF a promising signal:</p>
+    </div>
+    <div class="result-strip">
+      <div class="tile"><div class="big">8.6–9.9<small>%</small></div><div class="what">lower prediction error with OPF and the learned readout</div><div class="vs">Held-out heavy and slow drones, and ordinary test drones</div></div>
+      <div class="tile"><div class="big">7.9<small>%</small></div><div class="what">lower action regret with OPF on ordinary test drones</div><div class="vs">Learned readout. Per seed on held-out drones, regret fell for seeds 7 and 17 and rose for seed 29</div></div>
+      <div class="tile"><div class="big">384<small>/ 384</small></div><div class="what">matched learned-model flights without ground contact</div><div class="vs">Both models, both readouts</div></div>
+      <div class="tile"><div class="big">32<small>/ 32</small></div><div class="what">flights by the original SkyJEPA, transferred unchanged</div><div class="vs">5.6 cm tracking on a new simulator and rotor geometry; the geometric controller had 5.0 cm</div></div>
+    </div>
+    <div class="grid2">
+      <figure><img src="media/plus_learned.webp" alt="Side-by-side flights of the JEPA baseline and OPF variant with the learned readout" loading="lazy">
+        <figcaption>Learned readout, no physics integrator: baseline (left) and OPF (right) on a held-out heavy,
+          slow-motor drone.</figcaption></figure>
+      <figure><img src="media/plus_results.webp" alt="Results table of the three-seed study" loading="lazy">
+        <figcaption>The three-seed results screen.</figcaption></figure>
+    </div>
+    <div class="note-box"><strong>Worth running properly.</strong> Three seeds, one drone that was about to change, and
+      a seed-to-seed spread in action regret: enough to justify a larger study on the corrected X frame, with heading
+      changes in the training data.</div>
+  </section>
+
+  <section id="five-seeds">
+    <h2>7 · Five seeds, one X-frame drone</h2>
+    <p class="when">September 18, 20:59–21:59 · a fixed protocol, 1,008 flights, verified</p>
+    <div class="prose">
+      <p>The protocol was fixed before training: seeds 7, 17, 29, 43 and 59; 864 ten-second episodes across 72
+        physical configurations, balanced across fixed, path-facing and turning-in-place heading; 48 configurations for
+        training and eight each for validation, ordinary testing and a held-out region of heavier drones with slower
+        motors. Both models have 40,928 trainable parameters and read ten past states and nine motor commands.
+        Checkpoints were chosen on validation data only, and no test result tuned anything. The full run of
+        data, training and evaluation took 50 minutes 32 seconds on the RTX 4090.</p>
+    </div>
+    <div class="grid3">
+      <figure><img src="media/gym_physics.webp" alt="Physics readout flights, baseline and OPF" loading="lazy"><figcaption>Physics readout, path-facing figure eight.</figcaption></figure>
+      <figure><img src="media/gym_learned.webp" alt="Learned readout flights, baseline and OPF" loading="lazy"><figcaption>Learned readout, same flight, no physics integrator.</figcaption></figure>
+      <figure><img src="media/gym_yaw.webp" alt="Learned readout, turning in place" loading="lazy"><figcaption>Learned readout, turning in place.</figcaption></figure>
+    </div>
+    <div class="result-strip">
+      <div class="tile"><div class="big">960<small>/ 960</small></div><div class="what">learned-model flights with zero contact steps</div><div class="vs">5 seeds × 2 models × 2 readouts × 48 flights; plus 48 reference flights</div></div>
+      <div class="tile"><div class="big">2.3<small>%</small></div><div class="what">lower action regret with OPF, physics readout</div><div class="vs">0.8% with the learned readout; held-out heavy, slow drones</div></div>
+      <div class="tile"><div class="big">3.3<small>ms</small></div><div class="what">p95 prediction and scoring, learned readout</div><div class="vs">About 14 ms with the physics readout; excludes simulation and prior construction</div></div>
+      <div class="tile"><div class="big">3,072</div><div class="what">MuJoCo rollouts to score the models' choices</div><div class="vs">96 saved states × 32 candidate action sequences</div></div>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>Held-out heavy and slow drones</th><th class="num">Action regret</th><th class="num">Prediction RMSE</th><th class="num">Tracking RMSE</th><th class="num">Heading RMSE</th></tr>
+      <tr><td>Physics readout · JEPA baseline</td><td class="num">0.241</td><td class="num">0.119 m</td><td class="num">3.13 cm</td><td class="num">0.97°</td></tr>
+      <tr><td>Physics readout · OPF variant</td><td class="num">0.235</td><td class="num">0.143 m</td><td class="num">3.48 cm</td><td class="num">0.97°</td></tr>
+      <tr><td>Learned readout · JEPA baseline</td><td class="num">0.528</td><td class="num">0.502 m</td><td class="num">6.67 cm</td><td class="num">1.00°</td></tr>
+      <tr><td>Learned readout · OPF variant</td><td class="num">0.524</td><td class="num">0.599 m</td><td class="num">7.60 cm</td><td class="num">0.99°</td></tr>
+      <tr><td>Geometric controller alone, reference</td><td class="num">–</td><td class="num">–</td><td class="num">2.25 cm</td><td class="num">–</td></tr>
+    </table></div>
+    <div class="prose">
+      <p>Action regret measures how close a model's top-ranked action comes to the best one actually available, scored
+        by MuJoCo itself; lower is better. OPF picked slightly better actions with both readouts. The learned readout
+        flew every flight to completion without the supplied physics equations, more than four times faster to score
+        than the physics readout.</p>
+    </div>
+    <figure><img src="media/gym_results.webp" alt="Results screen of the five-seed study" loading="lazy">
+      <figcaption>The film's closing screen: all five seeds, not only the flights shown.</figcaption></figure>
+    <div class="note-box"><strong>What we hoped for.</strong> We hoped OPF's better action ranking would also mean
+      tighter tracking. In this study it did not: OPF's tracking error was 11–14% higher and its prediction error about 20% higher,
+      and the geometric controller alone, at 2.25 cm, remains the number to beat on these clean simulated flights. One
+      likely reason is that MPPI flies a weighted blend of many candidates, so a better top pick does not necessarily
+      change the command it sends.</div>
+  </section>
+
+  <section id="learned">
+    <h2>8 · What we learned</h2>
+    <p class="when">Across June to September</p>
+    <div class="lesson"><strong>The pipeline is the asset.</strong> Fixed data, splits, controllers, readouts and
+      baselines mean a new JEPA architecture can be trained, flown and filmed against the same references in an evening.
+      For JEPA-Anything that took 3 hours 48 minutes, from first look to a verified five-seed study.</div>
+    <div class="lesson"><strong>Learned models help most in the hard cases.</strong> SkyJEPA's largest gain over the
+      hand-written controller was in the worst flights, 26–34%, rather than the average. Edge cases are where learned
+      dynamics earn their place.</div>
+    <div class="lesson"><strong>Better ranking is not automatically better flying.</strong> OPF ranked actions better
+      and tracked worse. The planner's averaging sits between the model and the motors, so a model has to be measured
+      in the closed loop, not only by its predictions.</div>
+    <div class="lesson"><strong>Supplied physics is valuable, and so is speed.</strong> The physics readout predicts
+      four times more accurately than the learned readout; the learned readout scores four times faster. Both flew
+      every flight, which leaves room to combine them.</div>
+    <div class="lesson"><strong>Strong references keep the claims honest.</strong> Nominal-physics MPPI and the
+      geometric controller are hard to beat in a clean simulator because they know its equations. That is also why
+      learned dynamics should be tested where those equations stop being right.</div>
+    <div class="lesson"><strong>Models transfer.</strong> SkyJEPA, trained on another simulator with another rotor
+      layout, flew 32 of 32 MuJoCo flights unchanged, within 0.7 cm of the geometric controller.</div>
+  </section>
+
+  <section id="next">
+    <h2>9 · Next: new JEPA architectures</h2>
+    <p class="when">The gym is ready for the next idea</p>
+    <ol class="next-steps">
+      <li><strong>Try each new JEPA architecture as it appears</strong>New JEPA variants are appearing quickly. The
+        gym, the protocol and the baselines are ready; each new one needs an adapter and an evening, and its results
+        sit next to SkyJEPA's, OPF's and the references'.</li>
+      <li><strong>Fly where the equations break</strong>Gusting wind, slung payloads, a damaged motor or a large unknown
+        mass: conditions where the hand-written controller and nominal physics are wrong, and learned dynamics have room
+        to win.</li>
+      <li><strong>Predict further ahead</strong>At 3 s, a constant-velocity guess still beat both SkyJEPA and the first OPF adaptation.
+        Architectures designed for long, stable rollouts, the promise behind OPF, are aimed squarely at that gap.</li>
+      <li><strong>Give the model less help</strong>Weaken or remove the geometric action prior and measure how much of
+        the steering the world model can take over on its own.</li>
+      <li><strong>More seeds, more motion</strong>Train with heading changes throughout, add seeds, and confirm on a
+        fresh, untouched sample of drones.</li>
+      <li><strong>Bring winners home</strong>Port the best variant into the Rust/Candle CUDA runtime for real-time
+        control, then test it on logs from real flights.</li>
+    </ol>
+    <div class="prose"><p>Everything here is simulated. The result is a working path from a new world-model idea to
+      measured flights, and a set of baselines that any future JEPA has to beat.</p></div>
+  </section>
+
+</main>
+
+<footer class="wrap"><p>Source, documentation and recorded results: <a href="https://github.com/rozgo/le-wm-nv">rozgo/le-wm-nv</a>, in particular <a href="https://github.com/rozgo/le-wm-nv/blob/main/docs/skyjepa.md"><code>docs/skyjepa.md</code></a>, <a href="https://github.com/rozgo/le-wm-nv/blob/main/docs/jepa-anything-comparison.md"><code>docs/jepa-anything-comparison.md</code></a>, <a href="https://github.com/rozgo/le-wm-nv/blob/main/docs/jepa-gym-results.md"><code>docs/jepa-gym-results.md</code></a> and <code>benchmarks/</code>. The project's timeline is in <a href="https://github.com/rozgo/le-wm-nv/blob/main/docs/TIME_LOG.md"><code>docs/TIME_LOG.md</code></a>. Short film: <a href="https://www.youtube.com/watch?v=300rm4mPcYg">Self-Improving Agent Trains a UAV with JEPA</a>. LeWM follows <a href="https://github.com/galilai-group/stable-worldmodel">stable-worldmodel</a> at commit <code>40dff37</code>; SkyJEPA follows the <a href="https://arxiv.org/html/2606.23444">SkyJEPA paper</a>; OPF comes from <a href="https://github.com/Gen-Verse/JEPA-Anything">JEPA-Anything</a> (Apache 2.0), pinned to commit <code>c6e6c88</code>; rigid-body simulation by <a href="https://mujoco.org">MuJoCo</a> (Apache 2.0). All weights were trained for this project. This is an independent engineering study, not a result of those authors. Videos are re-encoded for the web from the MP4s in <code>docs/</code> and <code>docs/media/</code>.</p></footer>
+</body>
+</html>
