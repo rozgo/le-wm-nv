@@ -36,9 +36,10 @@ prober step 4,995 from 5,000 updates. Its latent stage took 24.33 seconds in
 PyTorch and its native prober stage took 275.40 seconds; the framework and
 objective differences prevent interpreting this as a training-speed victory.
 
-The finished 48-second, 1920×1080, 30 fps MP4 is saved locally under
-`reports/jepa-comparison-20260918/video/skyjepa-vs-jepa-anything.mp4`, with raw
-reports and a video provenance manifest alongside it. It shows both fixed-seed
+The finished 48-second, 1920×1080, 30 fps [MP4](media/skyjepa-vs-jepa-anything.mp4)
+is a byte-identical copy of
+`reports/jepa-comparison-20260918/video/skyjepa-vs-jepa-anything.mp4`, which keeps
+the raw reports and a video provenance manifest alongside it. It shows both fixed-seed
 flights and the aggregate results, including the OPF model's weaker outcome.
 
 The fixed [protocol](../benchmarks/jepa-anything/protocol.json) uses training

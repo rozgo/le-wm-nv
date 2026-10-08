@@ -1,0 +1,74 @@
+{
+ "title": "JEPA Flight Journal",
+ "heading": "Teaching JEPA world models to fly a drone",
+ "eyebrow": "Engineering journal · June–September 2026 · Rust/Candle CUDA · MuJoCo 3.13 · RTX 4090",
+ "lede": "A world model learns how a quadrotor responds to its rotor commands, and a sampling planner uses those predictions to choose what the motors do next. The work began as a CUDA-native port of LeWM, became SkyJEPA, a drone model rebuilt from a paper that makes a hand-written controller fly more accurately, and grew into the JEPA Gym, a MuJoCo test bench where a new JEPA architecture can be trained and flown against matched baselines in one evening.",
+ "description": "A Rust/Candle CUDA world-model runtime, SkyJEPA drone control rebuilt from a paper, and the MuJoCo JEPA Gym, where new JEPA architectures such as JEPA-Anything are trained and flown against matched baselines.",
+ "hero": {
+  "media": "gym_film",
+  "caption": "The JEPA Gym, September 18. One X-frame drone flown by two matched JEPA models, the plain baseline (left) and the OPF variant adapted from JEPA-Anything (right): first with the physics readout, then the learned readout, then turning in place, and finally the five-seed results. Real-time replay of recorded MuJoCo poses and model predictions. The test domain and training seed were fixed before evaluation, and propeller animation is decorative."
+ },
+ "metrics": [
+  {"value": "756 / 756", "label": "SkyJEPA tracking runs passed across three training seeds and four test conditions, with no ground contact"},
+  {"value": "26–34%", "label": "lower worst-case tracking error when SkyJEPA guides the hand-written controller (mean 4.4–6.7% lower)"},
+  {"value": "1,344", "label": "learned-model flights across the JEPA Gym's two studies, all with zero contact steps"},
+  {"value": "3.3 ms", "label": "p95 prediction and scoring with the learned readout on an RTX 4090, versus about 14 ms with the physics readout"},
+  {"value": "3 h 48 min", "label": "from the first look at JEPA-Anything to the verified five-seed JEPA Gym study"}
+ ],
+ "scope": "<strong>Where this stands.</strong> Simulation only, in two simulators: the project's native rotor simulator for SkyJEPA and MuJoCo 3.13 for the JEPA Gym. The world models are learned; the geometric flight controller is written by hand. In every flight that controller proposes motor commands and MPPI uses the learned predictions to choose among variations of them, so the models steer the drone rather than fly it alone. The JEPA-Anything models are this project's adaptations of its OPF method, trained here, not the authors' checkpoints. Nominal-physics MPPI and the geometric controller remain the references to beat. Every number on this page comes from files in the repository.",
+ "footer": "<p>Source, documentation and recorded results: <a href=\"https://github.com/rozgo/le-wm-nv\">rozgo/le-wm-nv</a>, in particular <a href=\"https://github.com/rozgo/le-wm-nv/blob/main/docs/skyjepa.md\"><code>docs/skyjepa.md</code></a>, <a href=\"https://github.com/rozgo/le-wm-nv/blob/main/docs/jepa-anything-comparison.md\"><code>docs/jepa-anything-comparison.md</code></a>, <a href=\"https://github.com/rozgo/le-wm-nv/blob/main/docs/jepa-gym-results.md\"><code>docs/jepa-gym-results.md</code></a> and <code>benchmarks/</code>. The project's timeline is in <a href=\"https://github.com/rozgo/le-wm-nv/blob/main/docs/TIME_LOG.md\"><code>docs/TIME_LOG.md</code></a>. Short film: <a href=\"https://www.youtube.com/watch?v=300rm4mPcYg\">Self-Improving Agent Trains a UAV with JEPA</a>. LeWM follows <a href=\"https://github.com/galilai-group/stable-worldmodel\">stable-worldmodel</a> at commit <code>40dff37</code>; SkyJEPA follows the <a href=\"https://arxiv.org/html/2606.23444\">SkyJEPA paper</a>; OPF comes from <a href=\"https://github.com/Gen-Verse/JEPA-Anything\">JEPA-Anything</a> (Apache 2.0), pinned to commit <code>c6e6c88</code>; rigid-body simulation by <a href=\"https://mujoco.org\">MuJoCo</a> (Apache 2.0). All weights were trained for this project. This is an independent engineering study, not a result of those authors. Videos are re-encoded for the web from the MP4s in <code>docs/</code> and <code>docs/media/</code>.</p>",
+ "card": {
+  "kicker": "World models · JEPA · RTX 4090",
+  "line": "A drone world model rebuilt from a paper makes a hand-written controller track more accurately; then a MuJoCo gym puts new JEPA architectures to the test, with 1,344 learned-model flights and zero contacts.",
+  "tags": ["world models", "JEPA", "MPPI control", "Rust + CUDA"],
+  "poster": "docs/media/jepa-gym-scene.png"
+ },
+ "media": {
+  "gym_film": {"src": "docs/media/jepa-gym-comparison.mp4", "poster_t": 9.5, "max_width": 1920, "crf": 23},
+  "runtime": {"src": "docs/le-wm-nv.png", "max_width": 1300},
+  "skyjepa_first": {"src": "docs/skyjepa-figure-eight.png", "max_width": 1280},
+  "skyjepa_film": {"src": "docs/skyjepa-v3-figure-eight.mp4", "poster_t": 10, "max_width": 1280, "crf": 24},
+  "opf_film": {"src": "docs/media/skyjepa-vs-jepa-anything.mp4", "poster_t": 13, "max_width": 1920, "crf": 24},
+  "opf_results": {"src": "docs/media/skyjepa-vs-jepa-anything-results.png"},
+  "gym_scene": {"src": "docs/media/jepa-gym-scene.png"},
+  "plus_review": {"src": "docs/media/jepa-gym-plus-frame-review.png", "max_width": 1400},
+  "x_review": {"src": "docs/media/jepa-gym-x-frame-review.png", "max_width": 1400},
+  "heading_film": {"src": "docs/media/jepa-gym-heading-demo.mp4", "poster_t": 3, "max_width": 1920, "crf": 24},
+  "plus_learned": {"src": "docs/media/jepa-gym-plus-frame-learned.png", "max_width": 1400},
+  "plus_results": {"src": "docs/media/jepa-gym-plus-frame-results.png", "max_width": 1400},
+  "gym_physics": {"src": "docs/media/jepa-gym-physics.png", "max_width": 1400},
+  "gym_learned": {"src": "docs/media/jepa-gym-learned.png", "max_width": 1400},
+  "gym_yaw": {"src": "docs/media/jepa-gym-yaw.png", "max_width": 1400},
+  "gym_results": {"src": "docs/media/jepa-gym-results.png", "max_width": 1400}
+ },
+ "theme": {
+  "scheme": "dark",
+  "theme_color": "#0b0f12",
+  "tokens": {
+   "bg": "#0b0f12",
+   "text": "#e6edf0",
+   "muted": "#8fa1ab",
+   "card": "#121920",
+   "line": "#1f2a32",
+   "link": "#48dab7",
+   "chip": "#17212a",
+   "soft": "#0f2226",
+   "bad": "#f08a6c",
+   "bad-soft": "#2a1c1b",
+   "accent": "#48dab7",
+   "accent-2": "#f3bc5b",
+   "accent-3": "#7bb1f4",
+   "on-accent": "#06120f",
+   "hero": "linear-gradient(125deg, #090c0f 0%, #0d1318 42%, #102a2e 76%, #16463f 100%)",
+   "hero-text": "#eef5f7",
+   "film": "#05080a",
+   "metric": "rgba(255, 255, 255, .07)",
+   "toc": "rgba(11, 15, 18, .9)",
+   "tile-1": "linear-gradient(135deg, #1f9c84, #135a4d)",
+   "tile-2": "linear-gradient(135deg, #3f6fb0, #253f6b)",
+   "tile-3": "linear-gradient(135deg, #c98a1f, #7d520f)",
+   "tile-4": "linear-gradient(135deg, #5d6b78, #333d46)",
+   "tile-text": "#f4fafb"
+  }
+ }
+}

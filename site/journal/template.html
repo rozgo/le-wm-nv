@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <meta name="theme-color" content="{{theme_color}}">
+  <link rel="stylesheet" href="journal.css?v={{css_version}}">
+  <style>:root { color-scheme: {{scheme}}; {{tokens}} }</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <a class="home-link" href="https://rozgo.github.io/mujoco-sandbox/">&larr; MuJoCo Sandbox</a>
+    <p class="eyebrow">{{eyebrow}}</p>
+    <h1>{{heading}}</h1>
+    <p class="lede">{{lede}}</p>
+    <figure class="hero-film">
+      {{hero_media}}
+      <figcaption>{{hero_caption}}</figcaption>
+    </figure>
+    <div class="metrics">{{metrics}}</div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Chapters">
+  <div class="wrap">{{toc}}</div>
+</nav>
+
+<main class="wrap">
+  <div class="scope">{{scope}}</div>
+{{content}}
+</main>
+
+<footer class="wrap">{{footer}}</footer>
+</body>
+</html>

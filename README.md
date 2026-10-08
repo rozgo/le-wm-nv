@@ -2,6 +2,12 @@
 
 NVIDIA/CUDA-first LeWM and SkyJEPA training, inference, and control runtime.
 
+**[Read the engineering journal](https://rozgo.github.io/le-wm-nv/)**: the story
+from the CUDA runtime through SkyJEPA to the JEPA Gym, with its films and
+measured results. Its sources are in `site/journal/`; build it with
+`uv run --script scripts/build_journal.py`. The timeline is in
+[docs/TIME_LOG.md](docs/TIME_LOG.md).
+
 ![le-wm-nv CUDA runtime architecture](docs/le-wm-nv.png)
 
 This repo supports two model families. LeWM remains the upstream-compatible

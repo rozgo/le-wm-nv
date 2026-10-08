@@ -10,7 +10,7 @@ action regret, but increased prediction and tracking errors. These are local
 LE-WM models with an OPF adaptation inspired by JEPA-Anything, not evaluations
 of official upstream pretrained checkpoints.
 
-[Watch the 42-second comparison](../reports/mujoco-xstudy-20260918/video/jepa-gym-comparison.mp4).
+[Watch the 42-second comparison](media/jepa-gym-comparison.mp4).
 The video shows both readouts during turning flight, then independent yaw in
 place. Its domain (83000) and training seed (7) were fixed before testing.
 The closing table includes all five seeds, rather than only the illustrated

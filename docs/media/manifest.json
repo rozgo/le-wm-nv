@@ -1,0 +1,70 @@
+{
+ "note": "Byte-identical copies of media from the ignored reports/ directory, kept for the docs and the journal.",
+ "files": {
+  "jepa-gym-comparison.mp4": {
+   "source": "reports/mujoco-xstudy-20260918/video/jepa-gym-comparison.mp4",
+   "sha256": "64ab5c4b27654196d5fe0e48225faef275f821387b982116a8c5ad88778b61b9",
+   "bytes": 4556196
+  },
+  "jepa-gym-heading-demo.mp4": {
+   "source": "reports/mujoco-xframe-20260918/heading/jepa-gym-heading-demo.mp4",
+   "sha256": "33edb02f7549b8b9d0b46d728cf0997b6f82dc7c7db675ac1e7679e8545ea492",
+   "bytes": 1391471
+  },
+  "skyjepa-vs-jepa-anything.mp4": {
+   "source": "reports/jepa-comparison-20260918/video/skyjepa-vs-jepa-anything.mp4",
+   "sha256": "d4b2c9bbbbec12cec6dcf0edebe4f1cb06dbf5fa22d8998ce027702d4ce8862f",
+   "bytes": 2112804
+  },
+  "skyjepa-vs-jepa-anything-results.png": {
+   "source": "reports/jepa-comparison-20260918/video/preview-44.png",
+   "sha256": "19846128029675751a86a8957e81a8ba7c2d15803f44e9c2ad87f31927d3c081",
+   "bytes": 117357
+  },
+  "jepa-gym-scene.png": {
+   "source": "reports/mujoco-xstudy-20260918/video/gym-preview.png",
+   "sha256": "7780b9bc6e659e747487428ba5b72c25e0b51d44a8ab6eae41c9897df25f7f9e",
+   "bytes": 295628
+  },
+  "jepa-gym-physics.png": {
+   "source": "reports/mujoco-xstudy-20260918/video/comparison-physics.png",
+   "sha256": "eac95b13a558dc56d8c0d7965efe63955b977b3598426efc56a328c6f8ca789e",
+   "bytes": 247693
+  },
+  "jepa-gym-learned.png": {
+   "source": "reports/mujoco-xstudy-20260918/video/comparison-learned.png",
+   "sha256": "791c6a9300bd3b5acf474c1b5c164fbd95b9445056c7790409293fef1df0ce59",
+   "bytes": 251554
+  },
+  "jepa-gym-yaw.png": {
+   "source": "reports/mujoco-xstudy-20260918/video/comparison-yaw.png",
+   "sha256": "9d565c44b1f206d2ed471ad101c76a75c31ae6c130380f19c99efe3ea51f8bd1",
+   "bytes": 273312
+  },
+  "jepa-gym-results.png": {
+   "source": "reports/mujoco-xstudy-20260918/video/results-preview.png",
+   "sha256": "648663581be28d6c063aa44929c32ae1fbb03601ae8aee1d290eff421edcf4e6",
+   "bytes": 87706
+  },
+  "jepa-gym-x-frame-review.png": {
+   "source": "reports/mujoco-xframe-20260918/asset-review/drone-geometry-review.png",
+   "sha256": "5fdaa652075dd8346662e66fdea8d54e982898c571d52fedf7f19c3878083b59",
+   "bytes": 425800
+  },
+  "jepa-gym-plus-frame-review.png": {
+   "source": "reports/mujoco-jepa-20260918/asset-review/drone-geometry-review.png",
+   "sha256": "6fcbbb74a5c01c1f1ea397ae1bc9f5b390020b8016a34ce27cd181488b80a064",
+   "bytes": 424825
+  },
+  "jepa-gym-plus-frame-learned.png": {
+   "source": "reports/mujoco-jepa-20260918/video/comparison-learned.png",
+   "sha256": "fff1fb5b65e1f0d82c3ff2c0e19c890ff9662b6f0adadde319ed8cda21595e48",
+   "bytes": 250958
+  },
+  "jepa-gym-plus-frame-results.png": {
+   "source": "reports/mujoco-jepa-20260918/video/results-preview.png",
+   "sha256": "18656a6a1a901cd00c5583dbfece4ee373710bc3cd045e084e7568b9bc3bd966",
+   "bytes": 84214
+  }
+ }
+}

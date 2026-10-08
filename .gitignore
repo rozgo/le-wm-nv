@@ -22,3 +22,6 @@ __pycache__/
 *.safetensors
 *.npz
 *.jsonl
+
+# Built journal and its media cache.
+/build/
